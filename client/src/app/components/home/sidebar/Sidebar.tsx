@@ -36,6 +36,13 @@ const Sidebar = () => {
         aria-label="Sidebar"
       >
         <div className="h-full px-3 py-4 overflow-y-auto flex flex-col bg-gray-50 dark:bg-gray-800 ">
+        <div className="flex justify-center mb-4">
+            <img
+              src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihbC1ArFnWYNNm7dW-TBXqIut4HaPvUwP6thSCf4nYC5mekE_GR4N_vKzRFnvOI7j65voWuCYPkJOA4jI0PQzec8vmLTO29qa_M=w1868-h952-rw-v1"
+              alt="Logo"
+              className="h-20"
+            />
+          </div>
           <ul className="flex-1 space-y-2 font-medium">
             <li>
               <a
