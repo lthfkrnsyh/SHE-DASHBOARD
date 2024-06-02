@@ -8,7 +8,7 @@ import ModalAdd from "@/app/components/home/modal/Modal";
 interface AccidentReport {
   id: number;
   user_id: number;
-  date_accident: string;
+  date_accident: Date;
   time_accident: string;
   location: string;
   department: string;
@@ -46,10 +46,15 @@ export default function ApprovePage() {
   const [user, setUser] = useState<User>();
   const [dataList, setDataList] = useState<AccidentReport[]>([]);
   const [open, setOpen] = useState(false);
+  const [selectedReportId, setSelectedReportId] = useState<string | null>(null);
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
+  const [entriesPerPage, setEntriesPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const accidentRepos = new AccidentRepository();
 
-  const pathname = usePathname();
+const [reportHistoryList, setReportHistoryList] = useState<ReportHistoryModel[]>([]);
   const router = useRouter();
 
   // Fungsi untuk mengambil data
@@ -65,10 +70,10 @@ export default function ApprovePage() {
     }
   };
 
-  const approvedRepot = async (id: string) => {
+  const approvedReport = async (id: string) => {
     try {
       if (user && user.token) {
-        const response = await accidentRepos.approvedRepot(
+        const response = await accidentRepos.approvedReport(
           user.token,
           id,
           user.id.toString()
@@ -82,6 +87,25 @@ export default function ApprovePage() {
       console.error("Error fetching data:", error);
     }
   };
+
+  const handleApproveClick = (id: string) => {
+    setSelectedReportId(id);
+    setOpen(true);
+  };
+
+  const handleConfirmApprove = () => {
+    if (selectedReportId) {
+      approvedReport(selectedReportId);
+    }
+    setOpen(false);
+    setSelectedReportId(null);
+  };
+
+  const handleCancelApprove = () => {
+    setOpen(false);
+    setSelectedReportId(null);
+  };
+
   useEffect(() => {
     const data: any = localStorage.getItem("data");
     if (data) {
@@ -113,24 +137,37 @@ export default function ApprovePage() {
     }
   }, [user]);
 
+  const filterDataByDate = () => {
+    if (!startDate || !endDate) return reportHistoryList;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return setReportHistoryList.filter(item => {
+      const itemDate = new Date(item.data_input || '');
+      return itemDate >= start && itemDate <= end;
+    });
+  };
+
+  const paginatedData = (data: getList[]) => {
+    const startIndex = (currentPage - 1) * entriesPerPage;
+    const endIndex = startIndex + entriesPerPage;
+    return data.slice(startIndex, endIndex);
+  };
+
+  const filteredData = filterDataByDate();
+  const totalPages = Math.ceil(filteredData.length / entriesPerPage);
+
+
   return (
     <>
       <div className="flex">
         <div className="flex-1">
           <h1 className="text-white font-bold text-3xl">
-            Welcome to the Home Page!
+            Approve Incident Report for Section Head
           </h1>
           <p className="text-gray-200 mb-5">
             This is the content specific to the home page.
           </p>
         </div>
-        {/* 
-        {user && user.token && (
-          <ModalAdd
-            token={user.token}
-            onSubmitCallback={() => getList(user.token)}
-          />
-        )} */}
       </div>
 
       <div className="relative overflow-x-auto ">
@@ -156,12 +193,12 @@ export default function ApprovePage() {
                 scope="col"
                 className="px-6 py-3 rounded-e-lg justify-center normal-case text-center"
               >
-                Action
+                Approve
               </th>
             </tr>
           </thead>
           <tbody className="rounded-md bg-gray-800">
-            {dataList.map((item, index) => (
+            {paginatedData(filteredData).map((item, index) => (
               <tr
                 key={index}
                 className="bg-white dark:bg-gray-800 hover:bg-gray-700"
@@ -192,7 +229,7 @@ export default function ApprovePage() {
                     <button
                       className="btn btn-circle btn-warning"
                       type="button"
-                      onClick={() => approvedRepot(item.id.toString())}
+                      onClick={() => handleApproveClick(item.id.toString())}
                     >
                       <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -231,22 +268,7 @@ export default function ApprovePage() {
                     </button>
                   )}
 
-                  <button className="btn btn-circle btn-error ml-2 ">
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-6 h-6"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0"
-                      />
-                    </svg>
-                  </button>
+                  
                 </td>
               </tr>
             ))}
@@ -266,7 +288,43 @@ export default function ApprovePage() {
             </tr>
           </tfoot>
         </table>
+        <div className="mt-4 flex justify-between">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="p-2 bg-gray-200 rounded-md"
+          >
+            Previous
+          </button>
+          <span className="p-2" style={{ color: 'white' }}>Page {currentPage} of {totalPages}</span>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="p-2 bg-gray-200 rounded-md"
+          >
+            Next
+          </button>
+        </div>
       </div>
+
+      {open && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-4 rounded-md shadow-lg">
+            <p>Are you sure you want to approve this report?</p>
+            <div className="flex justify-end mt-4">
+              <button
+                className="btn btn-secondary mr-2"
+                onClick={handleCancelApprove}
+              >
+                Cancel
+              </button>
+              <button className="btn btn-primary" onClick={handleConfirmApprove}>
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 }

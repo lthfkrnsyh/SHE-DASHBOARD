@@ -25,6 +25,10 @@ const HomePage = () => {
   const [selectedData, setSelectedData] = useState<IntensitasAirModel | null>(
     null
   );
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
+  const [entriesPerPage, setEntriesPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   const openModal = (data: IntensitasAirModel) => {
     setSelectedData(data);
@@ -71,7 +75,6 @@ const HomePage = () => {
     try {
       const response = await accidentRepos.getListIntensitasAirAll(token);
       setIntensitasAirList(response.data || []);
-      console.error("Error fetching user list:", response);
     } catch (error) {
       console.error("Error fetching user list:", error);
     }
@@ -79,11 +82,13 @@ const HomePage = () => {
 
   const deleteIntensitasAir = async (token: string, id: string) => {
     try {
+      if (confirm(`Apakah Anda yakin ingin menghapus data solid waste dengan ID ${id}?`)) {  
       const response = await accidentRepos.deleteIntensitasAir(token, id);
+      window.alert("Data berhasil dihapus!");
       getUserList(token);
-      console.error("Error fetching user list:", response);
+      }
     } catch (error) {
-      console.error("Error fetching user list:", error);
+      console.error("Error deleting data:", error);
     }
   };
 
@@ -96,6 +101,44 @@ const HomePage = () => {
       getUserList(user.token);
     }
   }, [user]);
+
+  const filterDataByDate = () => {
+    if (!startDate || !endDate) return intensitasAirList;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return intensitasAirList.filter(item => {
+      const itemDate = new Date(item.date || '');
+      return itemDate >= start && itemDate <= end;
+    });
+  };
+
+  const calculateSummary = (data: IntensitasAirModel[]) => {
+    let summary = {
+      product_finish_good: 0,
+      air_permukaan: 0,
+      air_tanah: 0,
+      air_pam: 0
+    };
+
+    data.forEach(item => {
+      summary.product_finish_good += item.product_finish_good || 0;
+      summary.air_permukaan += item.air_permukaan || 0;
+      summary.air_tanah += item.air_tanah || 0;
+      summary.air_pam += item.air_pam || 0;
+    });
+
+    return summary;
+  };
+
+  const paginatedData = (data: IntensitasAirModel[]) => {
+    const startIndex = (currentPage - 1) * entriesPerPage;
+    const endIndex = startIndex + entriesPerPage;
+    return data.slice(startIndex, endIndex);
+  };
+
+  const filteredData = filterDataByDate();
+  const summary = calculateSummary(filteredData);
+  const totalPages = Math.ceil(filteredData.length / entriesPerPage);
 
   return (
     <>
@@ -124,6 +167,37 @@ const HomePage = () => {
           />
         )}
       </div>
+
+      <div className="mb-4">
+        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          Filter by Date:
+        </label>
+        <div className="flex space-x-4">
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="p-2 border rounded-md"
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="p-2 border rounded-md"
+          />
+          <select
+            value={entriesPerPage}
+            onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+            className="p-2 border rounded-md"
+          >
+            <option value={10}>10 entries per page</option>
+            <option value={25}>25 entries per page</option>
+            <option value={50}>50 entries per page</option>
+            <option value={100}>100 entries per page</option>
+          </select>
+        </div>
+      </div>
+
       <div className="relative overflow-x-auto ">
         <table className="mt-4 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 bg-gray-800 rounded-lg">
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-200 dark:text-gray-700">
@@ -155,7 +229,7 @@ const HomePage = () => {
             </tr>
           </thead>
           <tbody className="rounded-md bg-gray-800">
-            {intensitasAirList.map((item, index) => (
+          {paginatedData(filteredData).map((item, index) => (
               <tr
                 key={index}
                 className="bg-white dark:bg-gray-800 hover:bg-gray-700"
@@ -237,19 +311,36 @@ const HomePage = () => {
           <tfoot>
             <tr className="font-bold text-gray-900 dark:text-white bg-gray-200">
               <th scope="row" className="px-6 py-3 text-gray-700  rounded-s-lg">
-                Total
+                Summary
               </th>
-              <td className="px-6 py-3 text-gray-700 "></td>
-              <td className="px-6 py-3 text-gray-700 "></td>
-              <td className="px-6 py-3 text-gray-700"></td>
-              <td className="px-6 py-3 text-gray-700"></td>
+              <td className="px-6 py-3 text-gray-700 ">{summary.product_finish_good}</td>
+              <td className="px-6 py-3 text-gray-700 ">{summary.air_permukaan}</td>
+              <td className="px-6 py-3 text-gray-700">{summary.air_tanah}</td>
+              <td className="px-6 py-3 text-gray-700">{summary.air_pam}</td>
               <td className="px-6 py-3 text-gray-700"></td>
               <td className="px-6 py-3 text-gray-700 rounded-e-lg text-center">
-                Count : {intensitasAirList.length}
+                Count : {filteredData.length} Data
               </td>
             </tr>
           </tfoot>
         </table>
+        <div className="mt-4 flex justify-between">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="p-2 bg-gray-200 rounded-md"
+          >
+            Previous
+          </button>
+          <span className="p-2" style={{ color: 'white' }}>Page {currentPage} of {totalPages}</span>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="p-2 bg-gray-200 rounded-md"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );

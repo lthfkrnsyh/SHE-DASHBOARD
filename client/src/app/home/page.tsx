@@ -499,50 +499,52 @@ const HomePage = () => {
         </div>
       </div>
 
-      {selectedCharts.kejadianTerjadi && (
-        <div className="grid grid-cols-1 gap-4 mb-4 card bg-white p-3">
-          <div>
-            <h1 className="text-gray-700 font-bold text-2xl">Kecelakaan Kerja</h1>
-            <BarChart data={chartData2} />
+      <div className={`grid ${Object.values(selectedCharts).filter(Boolean).length > 1 ? 'grid-cols-2 md:grid-cols-3' : 'grid-cols-1'} gap-4`}>
+        {selectedCharts.kejadianTerjadi && (
+          <div className="card bg-white p-3">
+            <div>
+              <h1 className="text-gray-700 font-bold text-2xl">Kecelakaan Kerja</h1>
+              <BarChart data={chartData2} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {selectedCharts.jamKerjaHilang && (
-        <div className="grid grid-cols-1 gap-4 mb-4 card bg-white p-3">
-          <div>
-            <h1 className="text-gray-700 font-bold text-2xl">Jam Kerja Hilang</h1>
-            <DoughnutChart data={chartData} />
+        {selectedCharts.jamKerjaHilang && (
+          <div className="card bg-white p-3">
+            <div>
+              <h1 className="text-gray-700 font-bold text-2xl">Jam Kerja Hilang</h1>
+              <DoughnutChart data={chartData} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {selectedCharts.frequencyRate && (
-        <div className="grid grid-cols-1 gap-4 mb-4 card bg-white p-3">
-          <div>
-            <h1 className="text-gray-700 font-bold text-2xl">Frequency Rate</h1>
-            <DoughnutChart data={chartFrequncyRate} />
+        {selectedCharts.frequencyRate && (
+          <div className="card bg-white p-3">
+            <div>
+              <h1 className="text-gray-700 font-bold text-2xl">Frequency Rate</h1>
+              <DoughnutChart data={chartFrequncyRate} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {selectedCharts.severityRate && (
-        <div className="grid grid-cols-1 gap-4 mb-4 card bg-white p-3">
-          <div>
-            <h1 className="text-gray-700 font-bold text-2xl">Severity Rate</h1>
-            <DoughnutChart data={chartSeverityRate} />
+        {selectedCharts.severityRate && (
+          <div className="card bg-white p-3">
+            <div>
+              <h1 className="text-gray-700 font-bold text-2xl">Severity Rate</h1>
+              <DoughnutChart data={chartSeverityRate} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
 
-      {selectedCharts.intensitasAir && (
-        <div className="grid grid-cols-1 gap-4 mb-4 card bg-white p-3">
-          <div>
-            <h1 className="text-gray-700 font-bold text-2xl">Intensitas Air</h1>
-            <DoughnutChart data={intensitasAir} />
+        {selectedCharts.intensitasAir && (
+          <div className="card bg-white p-3">
+            <div>
+              <h1 className="text-gray-700 font-bold text-2xl">Intensitas Air</h1>
+              <DoughnutChart data={intensitasAir} />
+            </div>
           </div>
-        </div>
-      )}
+        )}
+      </div>
     </>
   );
 };

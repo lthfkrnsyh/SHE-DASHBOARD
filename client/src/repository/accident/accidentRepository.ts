@@ -137,7 +137,7 @@ export class AccidentRepository {
     }
   }
 
-  async approvedRepot(
+  async approvedReport(
     token: string,
     id: string,
     user_id: string

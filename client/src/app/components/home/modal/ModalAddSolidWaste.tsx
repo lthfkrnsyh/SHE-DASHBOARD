@@ -97,6 +97,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={limbahPlastikNonB3Disposed}
                 onChange={(e) => setLimbahPlastikNonB3Disposed(e.target.value)}
+                min={0}
                 required
               />
 
@@ -107,6 +108,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={limbahDomestikNonPlastikNonB3Disposed}
                 onChange={(e) => setLimbahDomestikNonPlastikNonB3Disposed(e.target.value)}
+                min={0}
                 required
               />
 
@@ -117,6 +119,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={limbahIndustriNonPlastikNonB3Disposed}
                 onChange={(e) => setLimbahIndustriNonPlastikNonB3Disposed(e.target.value)}
+                min={0}
                 required
               />
 
@@ -127,6 +130,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={limbahB3Disposed}
                 onChange={(e) => setLimbahB3Disposed(e.target.value)}
+                min={0}
                 required
               />
               <input
@@ -136,6 +140,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={totalLimbahPadatDisposed}
                 onChange={(e) => setTotalLimbahPadatDisposed(e.target.value)}
+                min={0}
                 required
               />
 
@@ -146,6 +151,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={limbahPlastikNonB3Diverted}
                 onChange={(e) => setLimbahPlastikNonB3Diverted(e.target.value)}
+                min={0}
                 required
               />
 
@@ -156,6 +162,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={limbahDomestikNonPlastikNonB3Diverted}
                 onChange={(e) => setLimbahDomestikNonPlastikNonB3Diverted(e.target.value)}
+                min={0}
                 required
               />
 
@@ -166,6 +173,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={limbahIndustriNonPlastikNonB3Diverted}
                 onChange={(e) => setLimbahIndustriNonPlastikNonB3Diverted(e.target.value)}
+                min={0}
                 required
               />
               <input
@@ -175,6 +183,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={limbahB3Diverted}
                 onChange={(e) => setLimbahB3Diverted(e.target.value)}
+                min={0}
                 required
               />
               <input
@@ -184,6 +193,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={totalLimbahPadatDiverted}
                 onChange={(e) => setTotalLimbahPadatDiverted(e.target.value)}
+                min={0}
                 required
               />
               <input
@@ -193,6 +203,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={totalLimbahPadat}
                 onChange={(e) => setTotalLimbahPadat(e.target.value)}
+                min={0}
                 required
               />
               <input
@@ -202,6 +213,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={percentageDiverted}
                 onChange={(e) => setPercentageDiverted(e.target.value)}
+                min={0}
                 required
               />
               {/* <input

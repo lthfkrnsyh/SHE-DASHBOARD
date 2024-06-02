@@ -51,6 +51,10 @@ export default function ListReportPage() {
 
   const pathname = usePathname();
   const router = useRouter();
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
+  const [entriesPerPage, setEntriesPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
 
   // Fungsi untuk mengambil data
   const getList = async (token: string) => {
@@ -70,9 +74,10 @@ export default function ListReportPage() {
 
   const deleteReport = async (id: string) => {
     try {
-      if (user && user.token) {
+      if (user && user.token && confirm(`Apakah Anda yakin ingin menghapus data Incident Report dengan ID ${id}?`)) {
         const response = await accidentRepos.deleteReport(user.token, id);
         console.log("🚀 ~ getList ~ response:", response.data);
+        window.alert("Data berhasil dihapus!");
         getList(user.token);
       }
     } catch (error) {
@@ -107,6 +112,25 @@ export default function ListReportPage() {
     }
   }, [user]);
 
+  const filterDataByDate = () => {
+    if (!startDate || !endDate) return dataList;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return dataList.filter(item => {
+      const itemDate = new Date(item.date_accident || '');
+      return itemDate >= start && itemDate <= end;
+    });
+  };
+
+  const paginatedData = (data: AccidentReport[]) => {
+    const startIndex = (currentPage - 1) * entriesPerPage;
+    const endIndex = startIndex + entriesPerPage;
+    return data.slice(startIndex, endIndex);
+  };
+
+  const filteredData = filterDataByDate();
+  const totalPages = Math.ceil(filteredData.length / entriesPerPage);
+  
   return (
     <>
       <div className="flex">
@@ -122,6 +146,36 @@ export default function ListReportPage() {
             onSubmitCallback={() => getList(user.token)}
           />
         )}
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          Filter by Date:
+        </label>
+        <div className="flex space-x-4">
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="p-2 border rounded-md"
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="p-2 border rounded-md"
+          />
+          <select
+            value={entriesPerPage}
+            onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+            className="p-2 border rounded-md"
+          >
+            <option value={10}>10 entries per page</option>
+            <option value={25}>25 entries per page</option>
+            <option value={50}>50 entries per page</option>
+            <option value={100}>100 entries per page</option>
+          </select>
+        </div>
       </div>
 
       <div className="relative overflow-x-auto ">
@@ -152,7 +206,7 @@ export default function ListReportPage() {
             </tr>
           </thead>
           <tbody className="rounded-md bg-gray-800">
-            {dataList.map((item, index) => (
+          {paginatedData(filteredData).map((item, index) => (
               <tr
                 key={index}
                 className="bg-white dark:bg-gray-800 hover:bg-gray-700"
@@ -281,6 +335,23 @@ export default function ListReportPage() {
             </tr>
           </tfoot>
         </table>
+        <div className="mt-4 flex justify-between">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="p-2 bg-gray-200 rounded-md"
+          >
+            Previous
+          </button>
+          <span className="p-2" style={{ color: 'white' }}>Page {currentPage} of {totalPages}</span>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="p-2 bg-gray-200 rounded-md"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );

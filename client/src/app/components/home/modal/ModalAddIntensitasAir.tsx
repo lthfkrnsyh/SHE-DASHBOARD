@@ -81,6 +81,7 @@ const ModalAddIntensitasAir: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={productFinishGood}
                 onChange={(e) => setProductFinishGood(e.target.value)}
+                min={0}
                 required
               />
 
@@ -91,6 +92,7 @@ const ModalAddIntensitasAir: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={airPermukaan}
                 onChange={(e) => setAirPermukaan(e.target.value)}
+                min={0}
                 required
               />
 
@@ -101,6 +103,7 @@ const ModalAddIntensitasAir: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={airTanah}
                 onChange={(e) => setAirTanah(e.target.value)}
+                min={0}
                 required
               />
 
@@ -111,6 +114,7 @@ const ModalAddIntensitasAir: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={airPam}
                 onChange={(e) => setAirPam(e.target.value)}
+                min={0}
                 required
               />
               {/* <input

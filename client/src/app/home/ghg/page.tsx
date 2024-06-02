@@ -4,32 +4,32 @@ import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { User } from "../profile/page";
-import ModalAddReportHistory from "@/app/components/home/modal/ModalAddReportHistory";
-import ModalUpdateReportHistory from "@/app/components/home/modal/ModalUpdateReportHistory";
+import ModalAddGhg from "@/app/components/home/modal/ModalAddGhg";
+import ModalUpdateGhg from "@/app/components/home/modal/ModalUpdateGhg";
 
-export interface ReportHistoryModel {
+export interface GhgModel {
   id: number;
-  frequncy_kecelakaan: number | null;
-  mh_worked_hilang: number | null;
-  mh_worked_tersedia: number;
-  hari_kerja_hilang: number | null;
-  hari_kerja_tersedia: number | null;
-  jumlah_karyawan: number | null;
-  persen_mh_worked_hilang: number | null;
-  frequency_rate: number | null;
-  severity_rate: number | null;
-  cost_kecelakaa_kerja: number | null;
-  kec_tampa_hari_hilang: number | null;
-  kec_dg_hari_hilang: number | null;
-  data_input: Date | null;
-  date_update: Date | null; // Optional date with type Date or null
+  year: string | null;
+  Listrik: number | null;
+  SolarDieselB30: number | null;
+  NaturalGas: number | null;
+  SolarDieselB35: number | null;
+  BensinPetrol: number | null;
+  GRK: number | null;
+  EnergyGJ: number | null;
+  PenggunaanREC: number | null;
+  TotalAkhirGRK: number | null;
+  PersentaseReduceGRK: number | null;
+  TotalAkhirEnergyGJ: number | null;
+  TotalRenewableEnergyGJ: number | null;
+  PersentaseRenewableEnergy: number | null;
 }
 
 const HomePage = () => {
   const router = useRouter();
   const accidentRepos = new AccidentRepository();
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedData, setSelectedData] = useState<ReportHistoryModel | null>(
+  const [selectedData, setSelectedData] = useState<GhgModel | null>(
     null
   );
   const [startDate, setStartDate] = useState<string>('');
@@ -37,7 +37,7 @@ const HomePage = () => {
   const [entriesPerPage, setEntriesPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
 
-  const openModal = (data: ReportHistoryModel) => {
+  const openModal = (data: GhgModel) => {
     setSelectedData(data);
     setIsOpen(true);
   };
@@ -48,8 +48,8 @@ const HomePage = () => {
   };
 
   const [user, setUser] = useState<User>();
-  const [reportHistoryList, setReportHistoryList] = useState<
-    ReportHistoryModel[]
+  const [ghgList, setGhgList] = useState<
+    GhgModel[]
   >([]);
   useEffect(() => {
     // Mendapatkan data login dari local storage
@@ -80,23 +80,22 @@ const HomePage = () => {
 
   const getUserList = async (token: string) => {
     try {
-      const response = await accidentRepos.getListReportHistoryAll(token);
-      setReportHistoryList(response.data || []);
-      console.error("Error fetching user list:", response);
+      const response = await accidentRepos.getListGhgAll(token);
+      setGhgList(response.data || []);
     } catch (error) {
       console.error("Error fetching user list:", error);
     }
   };
 
-  const deleteReportHistory = async (token: string, id: string) => {
+  const deleteGhg = async (token: string, id: string) => {
     try {
-      if (confirm(`Apakah Anda yakin ingin menghapus data Analisa Kecelakaan Kerja dengan ID ${id}?`)) {  
-      const response = await accidentRepos.deleteReportHistory(token, id);
+      if (confirm(`Apakah Anda yakin ingin menghapus data solid waste dengan ID ${id}?`)) {  
+      const response = await accidentRepos.deleteGhg(token, id);
       window.alert("Data berhasil dihapus!");
       getUserList(token);
       }
     } catch (error) {
-      console.error("Error fetching user list:", error);
+      console.error("Error deleting data:", error);
     }
   };
 
@@ -111,16 +110,16 @@ const HomePage = () => {
   }, [user]);
 
   const filterDataByDate = () => {
-    if (!startDate || !endDate) return reportHistoryList;
+    if (!startDate || !endDate) return ghgList;
     const start = new Date(startDate);
     const end = new Date(endDate);
-    return setReportHistoryList.filter(item => {
-      const itemDate = new Date(item.data_input || '');
+    return ghgList.filter(item => {
+      const itemDate = new Date(item.date || '');
       return itemDate >= start && itemDate <= end;
     });
   };
 
-  const paginatedData = (data: ReportHistoryModel[]) => {
+  const paginatedData = (data: GhgModel[]) => {
     const startIndex = (currentPage - 1) * entriesPerPage;
     const endIndex = startIndex + entriesPerPage;
     return data.slice(startIndex, endIndex);
@@ -129,16 +128,15 @@ const HomePage = () => {
   const filteredData = filterDataByDate();
   const totalPages = Math.ceil(filteredData.length / entriesPerPage);
 
-
   return (
     <>
       <div className="flex">
         {" "}
         <h1 className="flex-1 text-gray-200 font-bold text-2xl mb-2">
-          Analisa Kecelakaan Kerja
+          GHG Menu
         </h1>
         {user && user.token && (
-          <ModalAddReportHistory
+          <ModalAddGhg
             token={user.token}
             onSubmitCallback={() => {
               getUserList(user.token);
@@ -146,7 +144,7 @@ const HomePage = () => {
           />
         )}
         {user && user.token && selectedData && (
-          <ModalUpdateReportHistory
+          <ModalUpdateGhg
             isOpen={isOpen}
             data={selectedData}
             token={user.token}
@@ -196,43 +194,49 @@ const HomePage = () => {
                 NO
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Frequency Kecelakaan
+                Year
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                M H Worked yg hilang
+                Month
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                M H Worked yg tersedia
+                Listrik pihak ke-3 (KWH)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Hari Kerja yg tersedia
+                Solar / Diesel B30 (Liter)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Hari kerja yg hilang
+                Natural Gas (MMBTU)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Jumlah Karyawan
+              Solar / Diesel B35 (Liter)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                % M H Worked yg hilang
+              Bensin/Petrol 100% (Liter)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Frequency Rate ( F R )
+              GRK (Ton CO₂)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Severity Rate ( S R )
+              Energy (GJ)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Cost Kecelakaan Kerja
+              Penggunaan REC (MWH)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Kec Tanpa Hari Hilang
+              Total Akhir GRK (Ton CO₂)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Kec Dg Hari Hilang
+              Presentase reduce GRK (%)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-                Date
+              Total Akhir Energy (GJ)
+              </th>
+              <th scope="col" className="px-6 py-3 normal-case">
+              Total Renewable Energy (GJ)
+              </th>
+              <th scope="col" className="px-6 py-3 normal-case">
+              Presentase Renewable Energy (%)
               </th>
               <th
                 scope="col"
@@ -243,7 +247,7 @@ const HomePage = () => {
             </tr>
           </thead>
           <tbody className="rounded-md bg-gray-800">
-           {paginatedData(filteredData).map((item, index) => (
+          {paginatedData(filteredData).map((item, index) => (
               <tr
                 key={index}
                 className="bg-white dark:bg-gray-800 hover:bg-gray-700"
@@ -258,43 +262,46 @@ const HomePage = () => {
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  {item.frequncy_kecelakaan || 0}
+                  {item.year || 0}
                 </th>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.mh_worked_hilang || 0}
+                  {item.Listrik || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.mh_worked_tersedia || 0}
+                  {item.SolarDieselB30 || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.hari_kerja_hilang || 0}
+                  {item.NaturalGas || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.hari_kerja_tersedia || 0}
+                  {item.SolarDieselB35 || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.jumlah_karyawan || 0}
+                  {item.BensinPetrol || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.persen_mh_worked_hilang || 0}
+                  {item.GRK || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.frequency_rate || 0}
+                  {item.EnergyGJ || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.severity_rate || 0}
+                  {item.PenggunaanREC || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.cost_kecelakaa_kerja || 0}
+                  {item.TotalAkhirGRK || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.kec_tampa_hari_hilang || 0}
+                  {item.PersentaseReduceGRK || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.kec_dg_hari_hilang || 0}
+                  {item.TotalAkhirEnergyGJ || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.data_input?.split(" ")[0] || "-"}
+                  {item.TotalRenewableEnergyGJ || 0}
+                </td>
+                <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  {item.PersentaseRenewableEnergy || 0}
                 </td>
                 <td className="px-6 py-4font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
                   <button
@@ -302,7 +309,7 @@ const HomePage = () => {
                     type="button"
                     onClick={() => {
                       if (user && user.token) {
-                        deleteReportHistory(user.token, item.id.toString());
+                        deleteGhg(user.token, item.id.toString());
                       }
                     }}
                   >
@@ -349,10 +356,12 @@ const HomePage = () => {
           <tfoot>
             <tr className="font-bold text-gray-900 dark:text-white bg-gray-200">
               <th scope="row" className="px-6 py-3 text-gray-700  rounded-s-lg">
-                Total
+                Summary
               </th>
-              <td className="px-6 py-3 text-gray-700 "></td>
-              <td className="px-6 py-3 text-gray-700 "></td>
+              <td className="px-6 py-3 text-gray-700"></td>
+              <td className="px-6 py-3 text-gray-700"></td>
+              <td className="px-6 py-3 text-gray-700"></td>
+              <td className="px-6 py-3 text-gray-700"></td>
               <td className="px-6 py-3 text-gray-700"></td>
               <td className="px-6 py-3 text-gray-700"></td>
               <td className="px-6 py-3 text-gray-700"></td>
@@ -365,12 +374,12 @@ const HomePage = () => {
               <td className="px-6 py-3 text-gray-700"></td>
               <td className="px-6 py-3 text-gray-700"></td>
               <td className="px-6 py-3 text-gray-700 rounded-e-lg text-center">
-                Count : {reportHistoryList.length}
+                Count : {filteredData.length} Data
               </td>
             </tr>
           </tfoot>
         </table>
-                <div className="mt-4 flex justify-between">
+        <div className="mt-4 flex justify-between">
           <button
             disabled={currentPage === 1}
             onClick={() => setCurrentPage(currentPage - 1)}
