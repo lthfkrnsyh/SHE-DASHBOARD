@@ -96,7 +96,7 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                min={0}
+                min={2019}
                 required
               />
 
@@ -112,7 +112,7 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
               />
 
               <input
-                type="numbe"
+                type="number"
                 id="SolarDieselB30"
                 placeholder="Air Tanah"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"

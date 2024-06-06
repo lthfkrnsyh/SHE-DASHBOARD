@@ -12,7 +12,7 @@ const PageWrapper = styled(motion.div)`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: linear-gradient(135deg, #f3e7e9 0%, #e3eeff 100%);
+  background: url('https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZGKZPm2OGbHHiLJkcMk6DcrBVRkkKIgentWN5TQrlSv9fxvCHvPbssmOxN0Wkc9I_2hrXdJ7czj_EnbNvF4CQ_2YerU_yJ1fk=w1920-h970-rw-v1') no-repeat center center/cover;
   padding: 1rem;
 `;
 
@@ -31,29 +31,9 @@ const BoxContainer = styled(motion.div)`
 
 const LoginBox = styled(BoxContainer)`
   padding: 2rem;
-  height: 100%; /* Set height to 100% */
   margin-bottom: 1rem;
 `;
 
-const TitleBox = styled(BoxContainer)`
-  padding: 2rem;
-  height: 100%; /* Set height to 100% */
-`;
-
-const Title = styled.h1`
-  font-size: 2rem;
-  color: #333;
-  text-align: center;
-`;
-
-const Image = styled.img`
-  width: 100%;
-  height: auto;
-  border-radius: 10px;
-  margin-bottom: 1rem; /* Added margin-bottom for spacing */
-`;
-
-// Define Page component
 const Page: React.FC = () => {
   const router = useRouter();
 
@@ -80,10 +60,6 @@ const Page: React.FC = () => {
 
   return (
     <PageWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <TitleBox initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
-      <Image src="https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZGKZPm2OGbHHiLJkcMk6DcrBVRkkKIgentWN5TQrlSv9fxvCHvPbssmOxN0Wkc9I_2hrXdJ7czj_EnbNvF4CQ_2YerU_yJ1fk=w1920-h970-rw-v1" alt="Welcome Image" />
-        
-      </TitleBox>
       <LoginBox initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
         <LoginForm onSubmit={handleLogin} />
       </LoginBox>
