@@ -546,6 +546,148 @@ class AccidentController {
       }
     },
   ];
+
+  //GHG
+  static deleteGhg = [
+    tokenMidelWare,
+    async (req, res) => {
+      try {
+        const id = req.params.id;
+        // Attempt to delete the accident record from the database
+        const app = await AccidentService.deleteGhg(id);
+        if (app.code !== 200) {
+          return sendRespon(res, app.status, null, app.message, app.code);
+        }
+
+        // Send a successful response
+        sendRespon(
+          res,
+          app.status,
+          null,
+          "Intensitas air deleted successfully",
+          app.code
+        );
+      } catch (error) {
+        console.error("Error deleting accident record:", error);
+        sendRespon(res, 500, null, "Failed to delete accident record", 500);
+      }
+    },
+  ];
+  static getGhgAll = [
+    tokenMidelWare,
+    async (req, res) => {
+      try {
+        const apps = await AccidentService.getGhgAll(1, 10);
+        console.log(`upi log => ${JSON.stringify(apps)}`);
+        if (apps.code == 200) {
+          sendResponList(
+            res,
+            apps.status,
+            apps.data,
+            apps.message,
+            apps.meta,
+            apps.code
+          );
+        } else {
+          sendRespon(res, apps.status, {}, apps.message, apps.code);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        sendRespon(res, "ERROR", {}, "An error occurred", 500);
+      }
+    },
+  ];
+
+  static insertGhg = [
+    tokenMidelWare,
+    async (req, res) => {
+      const { year, month, Listrik, SolarDieselB30, NaturalGas, SolarDieselB35, BensinPetrol, GRK, EnergyGJ, PenggunaanREC, TotalAkhirGRK, PersentaseReduceGRK, TotalRenewableEnergyGJ, PersentaseRenewableEnergy } =
+        req.body;
+
+      const app = await AccidentService.insertGhg({
+        year: year,
+        month: month,
+        Listrik: Listrik,
+        SolarDieselB30: SolarDieselB30,
+        NaturalGas: NaturalGas,
+        SolarDieselB35: SolarDieselB35,
+        BensinPetrol: BensinPetrol,
+        GRK: GRK,
+        EnergyGJ: EnergyGJ,
+        PenggunaanREC: PenggunaanREC,
+        TotalAkhirGRK: TotalAkhirGRK,
+        PersentaseReduceGRK: PersentaseReduceGRK,
+        TotalAkhirEnergyGJ: TotalAkhirEnergyGJ,
+        TotalRenewableEnergyGJ: TotalRenewableEnergyGJ,
+        PersentaseRenewableEnergy: PersentaseRenewableEnergy,
+      });
+
+      console.log(`upi log => ${JSON.stringify(app)}`);
+      if (app.code == 201) {
+        sendRespon(res, app.status, null, app.message, app.code);
+      } else {
+        sendRespon(res, app.status, null, app.message, app.code);
+      }
+    },
+  ];
+  static updateGhg = [
+    tokenMidelWare,
+    async (req, res) => {
+      const id = req.params.id;
+      const { year, month, Listrik, SolarDieselB30, NaturalGas, SolarDieselB35, BensinPetrol, GRK, EnergyGJ, PenggunaanREC, TotalAkhirGRK, PersentaseReduceGRK, TotalRenewableEnergyGJ, PersentaseRenewableEnergy } =
+        req.body;
+
+      const app = await AccidentService.updateGhg(id, {
+        year: year,
+        month: month,
+        Listrik: Listrik,
+        SolarDieselB30: SolarDieselB30,
+        NaturalGas: NaturalGas,
+        SolarDieselB35: SolarDieselB35,
+        BensinPetrol: BensinPetrol,
+        GRK: GRK,
+        EnergyGJ: EnergyGJ,
+        PenggunaanREC: PenggunaanREC,
+        TotalAkhirGRK: TotalAkhirGRK,
+        PersentaseReduceGRK: PersentaseReduceGRK,
+        TotalAkhirEnergyGJ: TotalAkhirEnergyGJ,
+        TotalRenewableEnergyGJ: TotalRenewableEnergyGJ,
+        PersentaseRenewableEnergy: PersentaseRenewableEnergy,
+      });
+
+      console.log(`upi log => ${JSON.stringify(app)}`);
+      if (app.code == 201) {
+        sendRespon(res, app.status, null, app.message, app.code);
+      } else {
+        sendRespon(res, app.status, null, app.message, app.code);
+      }
+    },
+  ];
+  static getGhgByTahun = [
+    tokenMidelWare,
+    async (req, res) => {
+      try {
+        const tahun = req.params.tahun;
+        const apps = await GhgService.getGhgByTahun(tahun);
+        console.log(`upi log => ${JSON.stringify(apps)}`);
+        if (apps.code == 200) {
+          sendResponList(
+            res,
+            apps.status,
+            apps.data,
+            apps.message,
+            apps.meta,
+            apps.code
+          );
+        } else {
+          sendRespon(res, apps.status, {}, apps.message, apps.code);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        sendRespon(res, "ERROR", {}, "An error occurred", 500);
+      }
+    },
+  ];
     
   //ReportHistory
   static deleteReportHistory = [

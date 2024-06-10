@@ -18,6 +18,8 @@ routerAccident.get(
   "/get_chart_report/:tahun",
   AccidentController.getChartReport
 );
+
+//Intensitas Air
 routerAccident.get("/intensitas_air", AccidentController.getIntensitasAirAll);
 routerAccident.get(
   "/intensitas_air/:tahun",
@@ -33,6 +35,8 @@ routerAccident.delete(
   AccidentController.deleteIntensitasAir
 );
 
+
+//Solid Waste
 routerAccident.get("/solidwaste", AccidentController.getSolidWasteAll);
 routerAccident.get(
   "/solidwaste/:tahun",
@@ -47,6 +51,24 @@ routerAccident.delete(
   "/solidwaste/:id",
   AccidentController.deleteSolidWaste
 );
+
+//GHG
+routerAccident.get("/ghg", AccidentController.getGhgAll);
+routerAccident.get(
+  "/ghg/:tahun",
+  AccidentController.getGhgByTahun
+);
+routerAccident.post("/ghg", AccidentController.insertSolidWaste);
+routerAccident.put(
+  "/ghg/:id",
+  AccidentController.updateGhg
+);
+routerAccident.delete(
+  "/ghg/:id",
+  AccidentController.deleteGhg
+);
+
+//Report History
 
 routerAccident.get("/report_history", AccidentController.getReportHistoryAll);
 routerAccident.get(

@@ -94,7 +94,7 @@ const HomePage = () => {
 
   const formatPercentage = (value: number | null): string => {
     if (value === null) return "0.00%";
-    return `${(Math.round(value * 100 * 100) / 100).toFixed(2)}%`;
+    return `${(Math.round(value * 100) / 100).toFixed(2)}%`;
   };
 
   return (

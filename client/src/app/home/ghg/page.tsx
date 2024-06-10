@@ -10,6 +10,7 @@ import ModalUpdateGhg from "@/app/components/home/modal/ModalUpdateGhg";
 export interface GhgModel {
   id: number;
   year: string | null;
+  month: string | null;
   Listrik: number | null;
   SolarDieselB30: number | null;
   NaturalGas: number | null;
@@ -133,7 +134,7 @@ const HomePage = () => {
       <div className="flex">
         {" "}
         <h1 className="flex-1 text-gray-200 font-bold text-2xl mb-2">
-          GHG Menu
+          Greenhouse Gases Report
         </h1>
         {user && user.token && (
           <ModalAddGhg
@@ -263,6 +264,12 @@ const HomePage = () => {
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
                   {item.year || 0}
+                </th>
+                <th
+                  scope="row"
+                  className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  {item.month || 0}
                 </th>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                   {item.Listrik || 0}

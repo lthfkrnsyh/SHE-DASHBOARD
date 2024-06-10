@@ -18,6 +18,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
   const [year, setYear] = useState(
     data.year || "0"
   );
+  const [month, setMonth] = useState(data.month || "");
   const [Listrik, setListrik] = useState(data.Listrik || "0");
   const [SolarDieselB30, setSolarDieselB30] = useState(data.SolarDieselB30 || "0");
   const [NaturalGas, setNaturalGas] = useState(data.NaturalGas || "0");
@@ -39,6 +40,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
     try {
       await accidentRepos.updateIntensitasAir(token, data.id.toString(), {
         year: year,
+        month: month,
         Listrik: Listrik,
         SolarDieselB30: SolarDieselB30,
         NaturalGas: NaturalGas,
@@ -84,9 +86,20 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               />
 
               <input
+                type="text"
+                id="month"
+                placeholder="Bulan"
+                className="input input-bordered w-full rounded-lg mt-3 flex-1"
+                value={month}
+                onChange={(e) => setMonth(e.target.value)}
+                required
+              />
+
+              <input
                 type="number"
                 id="Listrik"
-                placeholder="Air Permukaan"
+                placeholder="Listrik pihak ke-3 (KWH)
+"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={Listrik}
                 onChange={(e) => setListrik(e.target.value)}
@@ -97,7 +110,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="SolarDieselB30"
-                placeholder="Air Tanah"
+                placeholder="Solar / Diesel B30 (Liter)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={SolarDieselB30}
                 onChange={(e) => setSolarDieselB30(e.target.value)}
@@ -108,7 +121,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="NaturalGas"
-                placeholder="Air Pam"
+                placeholder="Natural Gas (MMBTU)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={NaturalGas}
                 onChange={(e) => setNaturalGas(e.target.value)}
@@ -118,7 +131,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="SolarDieselB35"
-                placeholder="Air Pam"
+                placeholder="Solar / Diesel B35 (Liter)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={SolarDieselB35}
                 onChange={(e) => setSolarDieselB35(e.target.value)}
@@ -128,7 +141,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="BensinPetrol"
-                placeholder="Air Pam"
+                placeholder="Bensin/Petrol 100% (Liter)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={BensinPetrol}
                 onChange={(e) => setBensinPetrol(e.target.value)}
@@ -138,7 +151,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="GRK"
-                placeholder="Air Pam"
+                placeholder="GRK (Ton CO₂)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={GRK}
                 onChange={(e) => setGRK(e.target.value)}
@@ -148,7 +161,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="EnergyGJ"
-                placeholder="Air Pam"
+                placeholder="Energy (GJ)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={EnergyGJ}
                 onChange={(e) => setEnergyGJ(e.target.value)}
@@ -158,7 +171,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="PenggunaanREC"
-                placeholder="Air Pam"
+                placeholder="Penggunaan REC (MWH)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={PenggunaanREC}
                 onChange={(e) => setPenggunaanREC(e.target.value)}
@@ -168,7 +181,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="TotalAkhirGRK"
-                placeholder="Air Pam"
+                placeholder="Total Akhir GRK (Ton CO₂)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={TotalAkhirGRK}
                 onChange={(e) => setTotalAkhirGRK(e.target.value)}
@@ -178,7 +191,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="PersentaseReduceGRK"
-                placeholder="Air Pam"
+                placeholder="Persentase reduce GRK (%)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={PersentaseReduceGRK}
                 onChange={(e) => setPersentaseReduceGRK(e.target.value)}
@@ -188,7 +201,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="TotalAkhirEnergyGJ"
-                placeholder="Air Pam"
+                placeholder="Total Akhir Energy (GJ)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={TotalAkhirEnergyGJ}
                 onChange={(e) => setTotalAkhirEnergyGJ(e.target.value)}
@@ -198,7 +211,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="TotalRenewableEnergyGJ"
-                placeholder="Air Pam"
+                placeholder="Total Renewable Energy (GJ)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={TotalRenewableEnergyGJ}
                 onChange={(e) => setTotalRenewableEnergyGJ(e.target.value)}
@@ -208,7 +221,7 @@ const ModalUpdateGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="PersentaseRenewableEnergy"
-                placeholder="Air Pam"
+                placeholder="Persentase Renewable Energy (%)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={PersentaseRenewableEnergy}
                 onChange={(e) => setPersentaseRenewableEnergy(e.target.value)}

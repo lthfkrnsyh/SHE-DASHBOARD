@@ -2,7 +2,7 @@
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { useEffect, useState } from "react";
 import { User } from "../profile/page";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import ModalAdd from "@/app/components/home/modal/Modal";
 
 interface AccidentReport {
@@ -53,8 +53,6 @@ export default function ApprovePage() {
   const [currentPage, setCurrentPage] = useState<number>(1);
 
   const accidentRepos = new AccidentRepository();
-
-const [reportHistoryList, setReportHistoryList] = useState<ReportHistoryModel[]>([]);
   const router = useRouter();
 
   // Fungsi untuk mengambil data
@@ -138,16 +136,16 @@ const [reportHistoryList, setReportHistoryList] = useState<ReportHistoryModel[]>
   }, [user]);
 
   const filterDataByDate = () => {
-    if (!startDate || !endDate) return reportHistoryList;
+    if (!startDate || !endDate) return dataList;
     const start = new Date(startDate);
     const end = new Date(endDate);
-    return setReportHistoryList.filter(item => {
-      const itemDate = new Date(item.data_input || '');
+    return dataList.filter(item => {
+      const itemDate = new Date(item.date_accident);
       return itemDate >= start && itemDate <= end;
     });
   };
 
-  const paginatedData = (data: getList[]) => {
+  const paginatedData = (data: AccidentReport[]) => {
     const startIndex = (currentPage - 1) * entriesPerPage;
     const endIndex = startIndex + entriesPerPage;
     return data.slice(startIndex, endIndex);
@@ -156,7 +154,6 @@ const [reportHistoryList, setReportHistoryList] = useState<ReportHistoryModel[]>
   const filteredData = filterDataByDate();
   const totalPages = Math.ceil(filteredData.length / entriesPerPage);
 
-
   return (
     <>
       <div className="flex">
@@ -164,9 +161,36 @@ const [reportHistoryList, setReportHistoryList] = useState<ReportHistoryModel[]>
           <h1 className="text-white font-bold text-3xl">
             Approve Incident Report for Section Head
           </h1>
-          <p className="text-gray-200 mb-5">
-            This is the content specific to the home page.
-          </p>
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          Filter by Date:
+        </label>
+        <div className="flex space-x-4">
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="p-2 border rounded-md"
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="p-2 border rounded-md"
+          />
+          <select
+            value={entriesPerPage}
+            onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+            className="p-2 border rounded-md"
+          >
+            <option value={10}>10 entries per page</option>
+            <option value={25}>25 entries per page</option>
+            <option value={50}>50 entries per page</option>
+            <option value={100}>100 entries per page</option>
+          </select>
         </div>
       </div>
 
@@ -222,10 +246,10 @@ const [reportHistoryList, setReportHistoryList] = useState<ReportHistoryModel[]>
                   {item.informasi}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.date_accident}
+                  {item.date_accident.toString()}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
-                  {item.approved != "1" ? (
+                  {item.approved !== "1" ? (
                     <button
                       className="btn btn-circle btn-warning"
                       type="button"
@@ -267,8 +291,6 @@ const [reportHistoryList, setReportHistoryList] = useState<ReportHistoryModel[]>
                       </svg>
                     </button>
                   )}
-
-                  
                 </td>
               </tr>
             ))}
