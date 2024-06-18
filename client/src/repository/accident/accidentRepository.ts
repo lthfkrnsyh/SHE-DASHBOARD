@@ -336,7 +336,7 @@ export class AccidentRepository {
   async getListGhgAll(token: string): Promise<any> {
     try {
       const response = await axios.get(
-        "http://localhost:4000/ghg/ghg",
+        "http://localhost:4000/accident/ghg",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -354,7 +354,7 @@ export class AccidentRepository {
   async insertGhg(token: string, data: FormData): Promise<any> {
     try {
       const response = await axios.post(
-        "http://localhost:4000/ghg/ghg",
+        "http://localhost:4000/accident/ghg",
         data,
         {
           headers: {
@@ -377,7 +377,7 @@ export class AccidentRepository {
   ): Promise<any> {
     try {
       const response = await axios.put(
-        "http://localhost:4000/ghg/ghg/" + id,
+        "http://localhost:4000/accident/ghg/" + id,
         data,
         {
           headers: {
@@ -396,7 +396,7 @@ export class AccidentRepository {
   async deleteGhg(token: string, id: string): Promise<any> {
     try {
       const response = await axios.delete(
-        "http://localhost:4000/ghg/ghg/" + id,
+        "http://localhost:4000/accident/ghg/" + id,
         {
           headers: {
             Authorization: `Bearer ${token}`,

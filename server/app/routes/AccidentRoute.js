@@ -58,7 +58,7 @@ routerAccident.get(
   "/ghg/:tahun",
   AccidentController.getGhgByTahun
 );
-routerAccident.post("/ghg", AccidentController.insertSolidWaste);
+routerAccident.post("/ghg", AccidentController.insertGhg);
 routerAccident.put(
   "/ghg/:id",
   AccidentController.updateGhg

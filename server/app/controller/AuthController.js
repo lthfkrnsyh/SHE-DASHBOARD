@@ -15,15 +15,15 @@ const tokenMidelWare = (req, res, next) => {
     const token =
       req.headers.authorization && req.headers.authorization.split(" ")[1];
     if (!token) {
-      return sendError(res, "Error", "Token tidak tersedia", 401);
+      return sendError(res, "Error", "Unavailable Token", 401);
     }
 
-    jwt.verify(token, "rahasia", (err, decoded) => {
+    jwt.verify(token, "Confidential", (err, decoded) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
-          return sendError(res, "Error", "Token sudah kedaluwarsa", 401);
+          return sendError(res, "Error", "Expired Token", 401);
         } else {
-          return sendError(res, "Error", "Token tidak valid", 401);
+          return sendError(res, "Error", "Invalid Token", 401);
         }
       }
       // If token is valid, proceed to the next middleware or route handler
@@ -111,11 +111,11 @@ class AuthController {
 
   static insert = [
     body("name").trim().notEmpty().withMessage("name is required"),
-    body("email").trim().notEmpty().withMessage("email by is required"),
+    body("email").trim().notEmpty().withMessage("email is required"),
     body("password").trim().notEmpty().withMessage("password is required"),
     body("phone_number").trim().notEmpty().withMessage("phone is required"),
     body("address").trim().notEmpty().withMessage("address is required"),
-    body("role").trim().notEmpty().withMessage("role is required"),
+    body("role").trim().notEmpty().withMessage("role is required '1' for ROOT, '2' for ADMIN "),
     async (req, res) => {
       const { name, email, password, phone_number, address, role } = req.body;
       const hash = await bcrypt.hash(password, saltRounds);
@@ -142,16 +142,16 @@ class AuthController {
 
   static update = [
     body("name").trim().notEmpty().withMessage("name is required"),
-    body("email").trim().notEmpty().withMessage("email by is required"),
+    body("email").trim().notEmpty().withMessage("email is required"),
     body("password").trim().notEmpty().withMessage("password is required"),
     body("phone_number").trim().notEmpty().withMessage("phone is required"),
     body("address").trim().notEmpty().withMessage("address is required"),
-    body("role").trim().notEmpty().withMessage("role is required"),
+    body("role").trim().notEmpty().withMessage("role is required '1' for ROOT, '2' for ADMIN "),
     async (req, res) => {
       const id = req.params.id;
       const { name, email, password, phone_number, address, role } = req.body;
 
-      const app = await AuthService.insertLevelQuiz(id, {
+      const app = await AuthService.update(id, {
         name: name,
         email: email,
         password: password,

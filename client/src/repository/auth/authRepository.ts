@@ -1,4 +1,5 @@
 import axios from "axios";
+
 export class AuthRepository {
   async loginApi(email: string, password: string): Promise<any> {
     try {
@@ -8,8 +9,10 @@ export class AuthRepository {
       });
       console.log("🚀 ~ loginApi ~ response:", response.data);
       return response.data;
-    } catch (error) {
-      // Handle errors
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        throw new Error(error.response.data.message);
+      }
       throw new Error("Failed to login");
     }
   }
@@ -21,11 +24,10 @@ export class AuthRepository {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getUserList ~ response:", response.data);
       return response.data;
-    } catch (error) {
-      // Handle errors
-      throw new Error("Failed to login");
+    } catch (error: any) {
+      throw new Error("Failed to fetch user list");
     }
   }
 }

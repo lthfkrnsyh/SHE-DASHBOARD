@@ -66,7 +66,7 @@ class AccidentService {
   //GHG
      // Solid Waste
      static async getGhgAll() {
-      return await AccidentRepository.getSGhgAll();
+      return await AccidentRepository.getGhgAll();
     }
     static async insertGhg(data) {
       return await AccidentRepository.insertGhg(data);
@@ -78,7 +78,7 @@ class AccidentService {
       return await AccidentRepository.deleteGhg(id);
     }
     static async getGhgByTahun(tahun) {
-      return await AccidentRepository.getGhgeByTahun(tahun);
+      return await AccidentRepository.getGhgByTahun(tahun);
     }
 
   // ReportHistory

@@ -15,6 +15,7 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
   const [isOpen, setIsOpen] = useState(false);
 
   const [year, setYear] = useState("");
+  const [month, setMonth] = useState("");
   const [Listrik, setListrik] = useState("");
   const [SolarDieselB30, setSolarDieselB30] = useState("");
   const [NaturalGas, setNaturalGas] = useState("");
@@ -28,31 +29,32 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
   const [TotalAkhirEnergyGJ, setTotalAkhirEnergyGJ] = useState("");
   const [TotalRenewableEnergyGJ, setTotalRenewableEnergyGJ] = useState("");
   const [PersentaseRenewableEnergy, setPersentaseRenewableEnergy] = useState("");
+  const [isCalculated, setIsCalculated] = useState(false);
 
   const accidentRepos = new AccidentRepository();
 
-  const handleSubmitInsert = async (event) => {
+  const handleSubmitInsert = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await accidentRepos.insertIntensitasAir(token, {
+      const response = await accidentRepos.insertGhg(token, {
         year: year,
-        Listrik: Listrik,
-        SolarDieselB30: SolarDieselB30,
-        NaturalGas: NaturalGas,
-        SolarDieselB35: SolarDieselB35,
-        BensinPetrol: BensinPetrol,
-        GRK: GRK,
-        EnergyGJ: EnergyGJ,
-        PenggunaanREC: PenggunaanREC,
-        TotalAkhirGRK: TotalAkhirGRK,
-        PersentaseReduceGRK: PersentaseReduceGRK,
-        TotalAkhirEnergyGJ: TotalAkhirEnergyGJ,
-        TotalRenewableEnergyGJ: TotalRenewableEnergyGJ,
-        PersentaseRenewableEnergy: PersentaseRenewableEnergy,
+        month: month,
+        Listrik: parseFloat(Listrik),
+        SolarDieselB30: parseFloat(SolarDieselB30),
+        NaturalGas: parseFloat(NaturalGas),
+        SolarDieselB35: parseFloat(SolarDieselB35),
+        BensinPetrol: parseFloat(BensinPetrol),
+        GRK: parseFloat(GRK),
+        EnergyGJ: parseFloat(EnergyGJ),
+        PenggunaanREC: parseFloat(PenggunaanREC),
+        TotalAkhirGRK: parseFloat(TotalAkhirGRK),
+        PersentaseReduceGRK: parseFloat(PersentaseReduceGRK),
+        TotalAkhirEnergyGJ: parseFloat(TotalAkhirEnergyGJ),
+        TotalRenewableEnergyGJ: parseFloat(TotalRenewableEnergyGJ),
+        PersentaseRenewableEnergy: parseFloat(PersentaseRenewableEnergy),
       });
       handleCallBack();
     } catch (error) {
-      // Handle other errors (e.g., network issues)
       console.error("Error submitting report:", error);
     }
   };
@@ -60,6 +62,42 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
   const handleCallBack = async () => {
     onSubmitCallback();
     setIsOpen(false);
+  };
+
+  const getCurrentYear = () => {
+    return new Date().getFullYear();
+  };
+
+  const generateYearOptions = () => {
+    const startYear = 2019;
+    const currentYear = getCurrentYear();
+    const years = [];
+    for (let year = startYear; year <= currentYear; year++) {
+      years.push(year);
+    }
+    return years;
+  };
+
+  const calculateValues = () => {
+    // Implementasikan logika perhitungan di sini
+    // Contoh perhitungan, ganti dengan logika yang sesuai
+    const calculatedGRK = parseFloat(Listrik) * 0.5 + parseFloat(SolarDieselB30) * 0.7 + parseFloat(NaturalGas) * 0.8 + parseFloat(SolarDieselB35) * 0.6 + parseFloat(BensinPetrol) * 0.9;
+    const calculatedEnergyGJ = parseFloat(Listrik) * 0.0036 + parseFloat(SolarDieselB30) * 0.0386 + parseFloat(NaturalGas) * 1.055 + parseFloat(SolarDieselB35) * 0.0386 + parseFloat(BensinPetrol) * 0.0342;
+    const calculatedTotalAkhirGRK = calculatedGRK - parseFloat(PenggunaanREC);
+    const calculatedPersentaseReduceGRK = ((calculatedGRK - calculatedTotalAkhirGRK) / calculatedGRK) * 100;
+    const calculatedTotalAkhirEnergyGJ = calculatedEnergyGJ - parseFloat(PenggunaanREC);
+    const calculatedTotalRenewableEnergyGJ = parseFloat(PenggunaanREC);
+    const calculatedPersentaseRenewableEnergy = (calculatedTotalRenewableEnergyGJ / calculatedTotalAkhirEnergyGJ) * 100;
+
+    setGRK(calculatedGRK.toFixed(2));
+    setEnergyGJ(calculatedEnergyGJ.toFixed(2));
+    setTotalAkhirGRK(calculatedTotalAkhirGRK.toFixed(2));
+    setPersentaseReduceGRK(calculatedPersentaseReduceGRK.toFixed(2));
+    setTotalAkhirEnergyGJ(calculatedTotalAkhirEnergyGJ.toFixed(2));
+    setTotalRenewableEnergyGJ(calculatedTotalRenewableEnergyGJ.toFixed(2));
+    setPersentaseRenewableEnergy(calculatedPersentaseRenewableEnergy.toFixed(2));
+
+    setIsCalculated(true);
   };
 
   return (
@@ -89,24 +127,51 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
           <h3 className="font-bold text-lg w-full ">Add Report</h3>
           <form method="post" onSubmit={handleSubmitInsert}>
             <div className="m-2">
-              <input
-                type="number"
+              <select
                 id="year"
-                placeholder="Tahun"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={year}
                 onChange={(e) => setYear(e.target.value)}
-                min={2019}
                 required
-              />
+              >
+                <option value="">Pilih Tahun</option>
+                {generateYearOptions().map((year) => (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+
+              <select
+                id="month"
+                className="input input-bordered w-full rounded-lg mt-3 flex-1"
+                value={month}
+                onChange={(e) => setMonth(e.target.value)}
+                required
+              >
+                <option value="">Pilih Bulan</option>
+                <option value="Januari">Januari</option>
+                <option value="Februari">Februari</option>
+                <option value="Maret">Maret</option>
+                <option value="April">April</option>
+                <option value="Mei">Mei</option>
+                <option value="Juni">Juni</option>
+                <option value="Juli">Juli</option>
+                <option value="Agustus">Agustus</option>
+                <option value="September">September</option>
+                <option value="Oktober">Oktober</option>
+                <option value="November">November</option>
+                <option value="Desember">Desember</option>
+              </select>
 
               <input
                 type="number"
                 id="Listrik"
-                placeholder="Air Permukaan"
+                placeholder="Listrik pihak ke-3 (KWH)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={Listrik}
                 onChange={(e) => setListrik(e.target.value)}
+                step="0.01"
                 min={0}
                 required
               />
@@ -114,10 +179,11 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="SolarDieselB30"
-                placeholder="Air Tanah"
+                placeholder="Solar / Diesel B30 (Liter)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={SolarDieselB30}
                 onChange={(e) => setSolarDieselB30(e.target.value)}
+                step="0.01"
                 min={0}
                 required
               />
@@ -125,116 +191,121 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
               <input
                 type="number"
                 id="NaturalGas"
-                placeholder="Air Pam"
+                placeholder="Natural Gas (MMBTU)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={NaturalGas}
                 onChange={(e) => setNaturalGas(e.target.value)}
+                step="0.01"
                 min={0}
                 required
               />
               <input
                 type="number"
                 id="SolarDieselB35"
-                placeholder="Air Pam"
+                placeholder="Solar / Diesel B35 (Liter)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={SolarDieselB35}
                 onChange={(e) => setSolarDieselB35(e.target.value)}
+                step="0.01"
                 min={0}
                 required
               />
               <input
                 type="number"
                 id="BensinPetrol"
-                placeholder="Air Pam"
+                placeholder="Bensin/Petrol 100% (Liter)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={BensinPetrol}
                 onChange={(e) => setBensinPetrol(e.target.value)}
-                min={0}
-                required
-              />
-              <input
-                type="number"
-                id="GRK"
-                placeholder="Air Pam"
-                className="input input-bordered w-full rounded-lg mt-3 flex-1"
-                value={GRK}
-                onChange={(e) => setGRK(e.target.value)}
-                min={0}
-                required
-              />
-              <input
-                type="number"
-                id="EnergyGJ"
-                placeholder="Air Pam"
-                className="input input-bordered w-full rounded-lg mt-3 flex-1"
-                value={EnergyGJ}
-                onChange={(e) => setEnergyGJ(e.target.value)}
+                step="0.01"
                 min={0}
                 required
               />
               <input
                 type="number"
                 id="PenggunaanREC"
-                placeholder="Air Pam"
+                placeholder="Penggunaan REC (MWH)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={PenggunaanREC}
                 onChange={(e) => setPenggunaanREC(e.target.value)}
+                step="0.01"
                 min={0}
+                required
+              />
+
+              <button
+                type="button"
+                onClick={calculateValues}
+                className="btn btn-success btn-outline rounded-lg w-1/5 mt-3"
+              >
+                Calculate
+              </button>
+
+              <input
+                type="number"
+                id="GRK"
+                placeholder="GRK (Ton CO₂)"
+                className="input input-bordered w-full rounded-lg mt-3 flex-1"
+                value={GRK}
+                readOnly
+                required
+              />
+              <input
+                type="number"
+                id="EnergyGJ"
+                placeholder="Energy (GJ)"
+                className="input input-bordered w-full rounded-lg mt-3 flex-1"
+                value={EnergyGJ}
+                readOnly
                 required
               />
               <input
                 type="number"
                 id="TotalAkhirGRK"
-                placeholder="Air Pam"
+                placeholder="Total Akhir GRK (Ton CO₂)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={TotalAkhirGRK}
-                onChange={(e) => setTotalAkhirGRK(e.target.value)}
-                min={0}
+                readOnly
                 required
               />
               <input
                 type="number"
                 id="PersentaseReduceGRK"
-                placeholder="Air Pam"
+                placeholder="Persentase reduce GRK (%)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={PersentaseReduceGRK}
-                onChange={(e) => setPersentaseReduceGRK(e.target.value)}
-                min={0}
+                readOnly
                 required
               />
               <input
                 type="number"
                 id="TotalAkhirEnergyGJ"
-                placeholder="Air Pam"
+                placeholder="Total Akhir Energy (GJ)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={TotalAkhirEnergyGJ}
-                onChange={(e) => setTotalAkhirEnergyGJ(e.target.value)}
-                min={0}
+                readOnly
                 required
               />
               <input
                 type="number"
                 id="TotalRenewableEnergyGJ"
-                placeholder="Air Pam"
+                placeholder="Total Renewable Energy (GJ)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={TotalRenewableEnergyGJ}
-                onChange={(e) => setTotalRenewableEnergyGJ(e.target.value)}
-                min={0}
+                readOnly
                 required
               />
               <input
                 type="number"
                 id="PersentaseRenewableEnergy"
-                placeholder="Air Pam"
+                placeholder="Persentase Renewable Energy (%)"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
                 value={PersentaseRenewableEnergy}
-                onChange={(e) => setPersentaseRenewableEnergy(e.target.value)}
-                min={0}
+                readOnly
                 required
               />
             </div>
             <div className="modal-action">
-              {/* if there is a button, it will close the modal */}
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}
@@ -245,6 +316,7 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
               <button
                 type="submit"
                 className="btn btn-success btn-outline rounded-lg w-1/5"
+                disabled={!isCalculated}
               >
                 Save
               </button>

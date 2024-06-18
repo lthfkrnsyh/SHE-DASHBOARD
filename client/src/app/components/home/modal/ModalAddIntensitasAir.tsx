@@ -97,7 +97,7 @@ const ModalAddIntensitasAir: React.FC<UserModalProps> = ({
               />
 
               <input
-                type="numbe"
+                type="number"
                 id="airTanah"
                 placeholder="Air Tanah"
                 className="input input-bordered w-full rounded-lg mt-3 flex-1"
@@ -117,15 +117,7 @@ const ModalAddIntensitasAir: React.FC<UserModalProps> = ({
                 min={0}
                 required
               />
-              {/* <input
-                type="text"
-                id="address"
-                placeholder="Address"
-                className="input input-bordered w-full rounded-lg mt-3 flex-1"
-                value={airPam}
-                onChange={(e) => setAirPam(e.target.value)}
-                required
-              /> */}
+              
               <input
                 type="date"
                 id="date"

@@ -38,7 +38,7 @@ const Sidebar = () => {
         <div className="h-full px-3 py-4 overflow-y-auto flex flex-col bg-gray-50 dark:bg-gray-800 ">
         <div className="flex justify-center mb-4">
             <img
-              src="https://lh3.googleusercontent.com/fife/ALs6j_GMt5PsYrbmlt5C60-qP5B6xRxErzsgJ9lnPxXiilFvOfySe7Sm14_w-c3FZYgWPlbofTPEyl2tnZnaFPFhtnHzEHKjjPXYOdk8fby-A9FOkwht3lZG0CwcnX5qJ77any4-lPsZ6pWI9E02K5LxeyMxN_QN9ZyWnIHL0DclzpQZgeYuMP8d8BgUYSEZwYCHQRwJD0-MgyYTJVrAFn7O-JCWwgQJ6TOBATnfR2fdfx3qtHLaYo1vQvpe2lBKgSWabQtZvvG-6Dbz6E6L6r6fK-SDMHXwjRMVO_dPA6x9L1zHYKxWnop7a3ZkV8xcfMcexx3QPpGndRjEZM4QL8OuqFJbWL94Qrw6IfiVaLxgSOPCkH1vYwD5ju6uVjhKseqZNkVJDXlfJuoDlAk3_VyowqsRKkcv7YSO6aueROYGGQPdsONbYM6roHR3x1Lm4QWEYXHAb88Xl7PgHktXuJWP8iXjMkKYvFfumNxShyR3XQ45d1fGB9UoE4EnNDyN3WABPpPX_BzNRmfxaZ1N4wIBIbUaHkOLtPXQtshBkNrkzqrIBjQQTSZSpC9zXRbdtOvMHMspYvBrto4me1U2Mu6PO7whnJqBKfR3B_LWNsStugItKozowfpljpWDcRsTr3gMP9TZdc0l-HdcA8u0_iaK0InubnY0waNySBu5CreN3gtS9BXr6TsIW2UoX3jPXARAXNyWNea-J5kvEMnP146iLPJbtGdYpy-zfG_yq1Et-xtx7j3c-GKKn8H-RPLgokjjC0XrJ9SDjBbv_buqU84tCK-6NZTY6UtyawMb6VXjxfzIeWBpOTiWYTr9I9IJkY_gt9krtruK-M53xEMM1ltIm9ook_DPeg4lfkIMguN59Vez5ZBTvmAAbtakcRTBYS4rgX_Xcvu10XCBnjNNqj6qSXIvyiETIb4JiDEAmvaB7wwr0THrI-_X1K9zIavhSelZL8CgG3go4ei5_PcZNCF7V0sN0JQ8_gs-q3iCrqrZgcp_FmJxT_0jMezJGAaQSkeV1X7yrgJ7EoN5KLoJhuBzthf70qUef8WIzO6_BcGd5gskT-o2EOBIFeL7RUxdH2cal2q1cp2Gw_ksB2WOAFskF1aE8JljCEqz-4be4kymDvMyNm6FMpShILTQ0EdLjebVIpzq49HMfWMblhB0dtMeBLYe6RQZM9o5_UMwgrOaS8EoaO0HnWXu_20MH-WsYet4q0miWhk6GI_d4KOVG6NvZh6jqXBkzPoU0FnOh-Q4ju_vG4bveTzpsvhmLzdIjB3aAGajCdoiiGsMB1XEtgG1ceObSmLU54pYsLEkM0ceMChbRgU6LAc5SLo7VmygCvKXSEL7EPj1E4dZBxiMz-RGvTg3Ntp1vwxGwltChIDuD-aAHrE7oYVtjOjdFFsgF3dsqwuL1LE1gkvqkjOCYmBIP56WQiJhuPNH2VlD1cBVuAVlpMBSGOCDYf1gPWlesjCC6FksXQ2HHc5oJRNxyiCbPKJql43zBcDhTQcPBgcZxuWmtn9nBx-Op3emL6a65oqNghrDvDp17GDPjpDvPQm6ciAQ0UqjNgeQglv0aOLKsbfcgk5xGNSZPcQHRNsRzktCVAfYiywrScTKRtXocDUYYLOqWv0vY_2eLxbMQrCdBQ30BMQM4987Xg6lc9KxNgvID-BIue2rv1sqVD0r9cdN6jwKVMA9ecs=w1920-h927"
+              src="/logo.png"
               alt="Logo"
               className="h-20"
             />
@@ -101,7 +101,7 @@ const Sidebar = () => {
                 </svg>
 
                 <span className="flex-1 ms-3 whitespace-nowrap">
-                  Intensitas Air
+                  Intensitas Air Report
                 </span>
               </a>
             </li>
@@ -133,7 +133,7 @@ const Sidebar = () => {
                 </svg>
 
                 <span className="flex-1 ms-3 whitespace-nowrap">
-                  Solid Waste
+                  Solid Waste Report
                 </span>
               </a>
             </li>
@@ -165,7 +165,7 @@ const Sidebar = () => {
                 </svg>
 
                 <span className="flex-1 ms-3 whitespace-nowrap">
-                  GHG
+                  GHG Report
                 </span>
               </a>
             </li>
@@ -197,7 +197,7 @@ const Sidebar = () => {
                 </svg>
 
                 <span className="flex-1 ms-3 whitespace-nowrap">
-                  Report History Incident
+                  Analisa Kecelakaan Kerja
                 </span>
               </a>
             </li>
@@ -228,7 +228,7 @@ const Sidebar = () => {
                 </svg>
 
                 <span className="flex-1 ms-3 whitespace-nowrap">
-                  List Report
+                  Incident Report
                 </span>
               </a>
             </li>
@@ -259,7 +259,9 @@ const Sidebar = () => {
                     />
                   </svg>
 
-                  <span className="flex-1 ms-3 whitespace-nowrap">Approve</span>
+                  <span className="flex-1 ms-3 whitespace-nowrap">
+                    Approval Incident Report
+                  </span>
                 </a>
               </li>
             )}
@@ -291,7 +293,9 @@ const Sidebar = () => {
                     />
                   </svg>
 
-                  <span className="flex-1 ms-3 whitespace-nowrap">User</span>
+                  <span className="flex-1 ms-3 whitespace-nowrap">
+                    User
+                  </span>
                 </a>
               </li>
             )}
@@ -322,7 +326,9 @@ const Sidebar = () => {
                   />
                 </svg>
 
-                <span className="flex-1 ms-3 whitespace-nowrap">Profile</span>
+                <span className="flex-1 ms-3 whitespace-nowrap">
+                  Profile
+                </span>
               </a>
             </li>
           </ul>
@@ -348,7 +354,9 @@ const Sidebar = () => {
                 d="M8.25 9V5.25A2.25 2.25 0 0 1 10.5 3h6a2.25 2.25 0 0 1 2.25 2.25v13.5A2.25 2.25 0 0 1 16.5 21h-6a2.25 2.25 0 0 1-2.25-2.25V15m-3 0-3-3m0 0 3-3m-3 3H15"
               />
             </svg>
-            <div className="flex-1 text-lg font-bold ">Log Out</div>
+            <div className="flex-1 text-lg font-bold ">
+              Log Out
+            </div>
           </button>
         </div>
       </aside>

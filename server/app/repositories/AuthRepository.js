@@ -4,6 +4,7 @@ const db = knex(knexConfig.development);
 var bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { response } = require("express");
+
 class AuthRepository {
   static async insert(data) {
     const result = await db("users_login")
@@ -12,14 +13,14 @@ class AuthRepository {
         return {
           code: 201,
           message: "Insert success",
-          status: "SUCCES",
+          status: "SUCCESS",
         };
       })
       .catch((err) => {
         const error = err.message.split("-");
         return {
           code: 400,
-          message: error[error.length - 1] || "Error fetching apps data",
+          message: error[error.length - 1] || "Error insert user data",
           status: "ERROR",
         };
       });
@@ -74,7 +75,7 @@ class AuthRepository {
     } catch (err) {
       return {
         code: 400,
-        message: err.message || "Error fetching apps data",
+        message: err.message || "Error fetching user role data",
         status: "ERROR",
       };
     }
@@ -94,34 +95,35 @@ class AuthRepository {
       } else {
         return {
           code: 404,
-          message: "Data apps Empty!",
+          message: "Data users Empty!",
           status: "EMPTY",
         };
       }
     } catch (err) {
       return {
         code: 400,
-        message: err.message || "Error fetching apps data",
+        message: err.message || "Error fetching user data",
         status: "ERROR",
       };
     }
   }
 
-  static async update(data) {
+  static async update(id, data) {
     const result = await db("users_login")
       .update(data)
+      .where({ id: id })
       .then(() => {
         return {
           code: 200,
           message: "Update success",
-          status: "SUCCES",
+          status: "SUCCESS",
         };
       })
       .catch((err) => {
         const error = err.message.split("-");
         return {
           code: 400,
-          message: error[error.length - 1] || "Error fetching apps data",
+          message: error[error.length - 1] || "Error update user data",
           status: "ERROR",
         };
       });
@@ -132,7 +134,6 @@ class AuthRepository {
     try {
       const rowsAffected = await db("users_login").where("id", id).del();
       if (rowsAffected === 0) {
-        // Jika tidak ada baris yang terpengaruh, mungkin level dengan UUID tersebut tidak ditemukan
         return {
           code: 404,
           message: "Level not found",
@@ -142,11 +143,11 @@ class AuthRepository {
 
       return {
         code: 202,
-        message: "Level successfully deleted!",
+        message: "User successfully deleted!",
         status: "SUCCESS",
       };
     } catch (error) {
-      console.error("Error deleting level:", error);
+      console.error("Error deleting user:", error);
       return {
         code: 500,
         message: "Internal server error",
@@ -161,15 +162,15 @@ class AuthRepository {
 
       if (rows.length >= 1) {
         const hashedPassword = rows[0].password;
-        if (bcrypt.compare(password, hashedPassword)) {
-          // Buat token JWT
+        const isPasswordValid = await bcrypt.compare(password, hashedPassword);
+        if (isPasswordValid) {
           const token = jwt.sign(
             {
               userId: rows[0].id,
               email: rows[0].email,
               name: rows[0].name,
             },
-            "rahasia",
+            "Confidential",
             { expiresIn: "12h" }
           );
 
@@ -194,19 +195,19 @@ class AuthRepository {
         } else {
           return {
             code: 400,
-            message: "password not same",
+            message: "Invalid password. Please try again.",
             status: "ERROR",
           };
         }
       } else {
         return {
           code: 400,
-          message: "Email tidak terdaftar",
+          message: "Sorry, we don't recognize this email address. Please contact the SHE Administrator if you don't have an account.",
           status: "ERROR",
         };
       }
     } catch (error) {
-      console.error("Error deleting level:", error);
+      console.error("Error deleting User:", error);
       return {
         code: 500,
         message: "Internal server error",

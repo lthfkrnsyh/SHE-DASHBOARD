@@ -1,7 +1,7 @@
 // app/layout.tsx
 "use client";
 import React, { useEffect, useState } from "react";
-import DoughnutChart from "../components/home/chart/DoughnutChart";
+import DoughnutChart, { DoughnutChartData } from "../components/home/chart/DoughnutChart";
 import BarChart, { BarChartData } from "../components/home/chart/BarChart";
 import { useRouter } from "next/navigation";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
@@ -10,7 +10,7 @@ import { User } from "./profile/page";
 const HomePage = () => {
   const router = useRouter();
   const accidentRepos = new AccidentRepository();
-  
+
   const [chartData2, setChartData2] = useState<BarChartData>({
     labels: [
       "Januari",

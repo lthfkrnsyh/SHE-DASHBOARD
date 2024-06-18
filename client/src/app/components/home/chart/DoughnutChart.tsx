@@ -1,4 +1,3 @@
-// components/DoughnutChart.tsx
 import React from "react";
 import { Doughnut } from "react-chartjs-2";
 import { ArcElement, Tooltip, Legend, Chart } from "chart.js"; // Register elements
@@ -8,7 +7,11 @@ export interface DoughnutChartData {
   datasets: { data: number[]; label: string; backgroundColor: string[] }[];
 }
 
-const DoughnutChart: React.FC<DoughnutChartData> = ({ data }) => {
+interface DoughnutChartProps {
+  data: DoughnutChartData;
+}
+
+const DoughnutChart: React.FC<DoughnutChartProps> = ({ data }) => {
   Chart.register(ArcElement, Tooltip, Legend); // Register elements
 
   const options = {

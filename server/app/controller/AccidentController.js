@@ -21,7 +21,7 @@ const tokenMidelWare = (req, res, next) => {
       return sendError(res, "Error", "Token tidak tersedia", 401);
     }
 
-    jwt.verify(token, "rahasia", (err, decoded) => {
+    jwt.verify(token, "Confidential", (err, decoded) => {
       if (err) {
         if (err.name === "TokenExpiredError") {
           return sendError(res, "Error", "Token sudah kedaluwarsa", 401);
@@ -79,7 +79,7 @@ const fileFilter = (req, file, cb) => {
     return cb({ error: "Token tidak tersedia" });
   }
 
-  jwt.verify(token, "rahasia", (err, decoded) => {
+  jwt.verify(token, "Confidential", (err, decoded) => {
     if (err) {
       return cb({ error: "Token tidak valid atau sudah kedaluwarsa" });
     }
@@ -564,7 +564,7 @@ class AccidentController {
           res,
           app.status,
           null,
-          "Intensitas air deleted successfully",
+          "GHG deleted successfully",
           app.code
         );
       } catch (error) {
@@ -601,7 +601,7 @@ class AccidentController {
   static insertGhg = [
     tokenMidelWare,
     async (req, res) => {
-      const { year, month, Listrik, SolarDieselB30, NaturalGas, SolarDieselB35, BensinPetrol, GRK, EnergyGJ, PenggunaanREC, TotalAkhirGRK, PersentaseReduceGRK, TotalRenewableEnergyGJ, PersentaseRenewableEnergy } =
+      const { year, month, Listrik, SolarDieselB30, NaturalGas, SolarDieselB35, BensinPetrol, GRK, EnergyGJ, PenggunaanREC, TotalAkhirGRK, PersentaseReduceGRK, TotalAkhirEnergyGJ, TotalRenewableEnergyGJ, PersentaseRenewableEnergy } =
         req.body;
 
       const app = await AccidentService.insertGhg({
@@ -634,7 +634,7 @@ class AccidentController {
     tokenMidelWare,
     async (req, res) => {
       const id = req.params.id;
-      const { year, month, Listrik, SolarDieselB30, NaturalGas, SolarDieselB35, BensinPetrol, GRK, EnergyGJ, PenggunaanREC, TotalAkhirGRK, PersentaseReduceGRK, TotalRenewableEnergyGJ, PersentaseRenewableEnergy } =
+      const { year, month, Listrik, SolarDieselB30, NaturalGas, SolarDieselB35, BensinPetrol, GRK, EnergyGJ, PenggunaanREC, TotalAkhirGRK, PersentaseReduceGRK, TotalAkhirEnergyGJ, TotalRenewableEnergyGJ, PersentaseRenewableEnergy } =
         req.body;
 
       const app = await AccidentService.updateGhg(id, {

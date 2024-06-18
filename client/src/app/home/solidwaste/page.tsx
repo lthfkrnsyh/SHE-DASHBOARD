@@ -31,6 +31,11 @@ const HomePage = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedData, setSelectedData] = useState<SolidWasteModel | null>(null);
 
+  const [startDate, setStartDate] = useState<string>('');
+  const [endDate, setEndDate] = useState<string>('');
+  const [entriesPerPage, setEntriesPerPage] = useState<number>(10);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+
   const openModal = (data: SolidWasteModel) => {
     setSelectedData(data);
     setIsOpen(true);
@@ -92,10 +97,29 @@ const HomePage = () => {
     }
   }, [user]);
 
+  const filterDataByDate = () => {
+    if (!startDate || !endDate) return solidWasteList;
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    return solidWasteList.filter(item => {
+      const itemDate = new Date(item.date || '');
+      return itemDate >= start && itemDate <= end;
+    });
+  };
+
   const formatPercentage = (value: number | null): string => {
     if (value === null) return "0.00%";
     return `${(Math.round(value * 100) / 100).toFixed(2)}%`;
   };
+
+  const paginatedData = (data: SolidWasteModel[]) => {
+    const startIndex = (currentPage - 1) * entriesPerPage;
+    const endIndex = startIndex + entriesPerPage;
+    return data.slice(startIndex, endIndex);
+  };
+
+  const filteredData = filterDataByDate();
+  const totalPages = Math.ceil(filteredData.length / entriesPerPage);
 
   return (
     <>
@@ -123,6 +147,37 @@ const HomePage = () => {
           />
         )}
       </div>
+
+      <div className="mb-4">
+        <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          Filter by Date:
+        </label>
+        <div className="flex space-x-4">
+          <input
+            type="date"
+            value={startDate}
+            onChange={(e) => setStartDate(e.target.value)}
+            className="p-2 border rounded-md"
+          />
+          <input
+            type="date"
+            value={endDate}
+            onChange={(e) => setEndDate(e.target.value)}
+            className="p-2 border rounded-md"
+          />
+          <select
+            value={entriesPerPage}
+            onChange={(e) => setEntriesPerPage(Number(e.target.value))}
+            className="p-2 border rounded-md"
+          >
+            <option value={10}>10 entries per page</option>
+            <option value={25}>25 entries per page</option>
+            <option value={50}>50 entries per page</option>
+            <option value={100}>100 entries per page</option>
+          </select>
+        </div>
+      </div>  
+      
       <div className="relative overflow-x-auto">
         <table className="mt-4 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 bg-gray-800 rounded-lg">
           <thead className="text-xs text-gray-700 uppercase bg-gray-100 dark:bg-gray-200 dark:text-gray-700">
@@ -175,7 +230,7 @@ const HomePage = () => {
             </tr>
           </thead>
           <tbody className="rounded-md bg-gray-800">
-            {solidWasteList.map((item, index) => (
+            {paginatedData(filteredData).map((item, index) => (
               <tr
                 key={index}
                 className="bg-white dark:bg-gray-800 hover:bg-gray-700"
@@ -299,6 +354,23 @@ const HomePage = () => {
             </tr>
           </tfoot>
         </table>
+        <div className="mt-4 flex justify-between">
+          <button
+            disabled={currentPage === 1}
+            onClick={() => setCurrentPage(currentPage - 1)}
+            className="p-2 bg-gray-200 rounded-md"
+          >
+            Previous
+          </button>
+          <span className="p-2" style={{ color: 'white' }}>Page {currentPage} of {totalPages}</span>
+          <button
+            disabled={currentPage === totalPages}
+            onClick={() => setCurrentPage(currentPage + 1)}
+            className="p-2 bg-gray-200 rounded-md"
+          >
+            Next
+          </button>
+        </div>
       </div>
     </>
   );

@@ -45,7 +45,9 @@ const ModalAdd: React.FC<FileUploadProps> = ({ token, onSubmitCallback }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    const fileInput = event.target.querySelector('input[type="file"]') as HTMLInputElement;
+    const form = event.currentTarget as HTMLFormElement;
+    const fileInput = form.querySelector('input[type="file"]') as HTMLInputElement;
+
     if (!fileInput.files || fileInput.files.length === 0) {
       alert("Please select an image file.");
       return;

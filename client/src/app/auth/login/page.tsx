@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import LoginForm from "../../components/auth/login";
+import LoginPage from "../../components/auth/login";
 import { AuthRepository } from "@/repository/auth/authRepository";
 
 // Styled components
@@ -12,7 +12,7 @@ const PageWrapper = styled(motion.div)`
   justify-content: center;
   align-items: center;
   height: 100vh;
-  background: url('https://lh3.googleusercontent.com/u/0/drive-viewer/AKGpihZGKZPm2OGbHHiLJkcMk6DcrBVRkkKIgentWN5TQrlSv9fxvCHvPbssmOxN0Wkc9I_2hrXdJ7czj_EnbNvF4CQ_2YerU_yJ1fk=w1920-h970-rw-v1') no-repeat center center/cover;
+  background: url('/background.png') no-repeat center center/cover;
   padding: 1rem;
 `;
 
@@ -48,20 +48,25 @@ const Page: React.FC = () => {
   const authRepos = new AuthRepository();
 
   const handleLogin = async (userData: { email: string; password: string }) => {
-    console.log("🚀 ~ handleLogin ~ userData:", userData);
-    const respon = await authRepos.loginApi(userData.email, userData.password);
-    console.log("🚀 ~ handleLogin ~ token:", respon);
-    if (respon) {
-      localStorage.setItem("isLoggedIn", "true");
-      localStorage.setItem("data", JSON.stringify(respon.data));
-      router.push("/home");
+    try {
+      console.log("🚀 ~ handleLogin ~ userData:", userData);
+      const respon = await authRepos.loginApi(userData.email, userData.password);
+      console.log("🚀 ~ handleLogin ~ token:", respon);
+      if (respon) {
+        localStorage.setItem("isLoggedIn", "true");
+        localStorage.setItem("data", JSON.stringify(respon.data));
+        router.push("/home");
+      }
+    } catch (err: any) {
+      console.error(err.message);
+      throw new Error(err.message);
     }
   };
 
   return (
     <PageWrapper initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
       <LoginBox initial={{ scale: 0.8 }} animate={{ scale: 1 }} transition={{ duration: 0.5 }}>
-        <LoginForm onSubmit={handleLogin} />
+        <LoginPage onSubmit={handleLogin} />
       </LoginBox>
     </PageWrapper>
   );
