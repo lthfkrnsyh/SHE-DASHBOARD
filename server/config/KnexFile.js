@@ -10,7 +10,7 @@ module.exports = {
     connection: {
       host: "localhost", // Database host (default: localhost)
       user: "root", // Database user (default for MySQL: root)
-      password: "", // Password for the database user (no password by default)
+      password: "root", // Password for the database user (no password by default)
       database: "db_report",
       dateStrings: true, // Name of the database
     },
@@ -27,7 +27,7 @@ module.exports = {
     connection: {
       host: "localhost", // Database host (default: localhost)
       user: "root", // Database user (default for MySQL: root)
-      password: "", // Password for the database user (no password by default)
+      password: "root", // Password for the database user (no password by default)
       database: "db_report", // Name of the database
     },
     migrations: {
@@ -43,7 +43,7 @@ module.exports = {
     connection: {
       host: "localhost", // Database host (default: localhost)
       user: "root", // Database user (default for MySQL: root)
-      password: "", // Password for the database user (no password by default)
+      password: "root", // Password for the database user (no password by default)
       database: "db_report", // Name of the database
     },
     migrations: {
