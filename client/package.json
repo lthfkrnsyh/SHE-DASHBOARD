@@ -15,7 +15,7 @@
     "@reduxjs/toolkit": "^2.2.3",
     "axios": "^1.6.8",
     "capitalize-the-first-letter": "^1.0.8",
-    "chart.js": "^4.4.2",
+    "chart.js": "^4.4.3",
     "classnames": "^2.5.1",
     "faker": "^5.5.3",
     "framer-motion": "^11.2.9",
