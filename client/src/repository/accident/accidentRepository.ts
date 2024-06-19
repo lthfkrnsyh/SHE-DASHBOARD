@@ -426,7 +426,7 @@ export class AccidentRepository {
         console.log("🚀 ~ getListTabelKonversi2024All ~ response:", response.data);
         return response.data;
       } catch (error) {
-        // Handle errors
+        console.error("Failed to fetch 2024 data:", error);
         return [];
       }
     }
@@ -442,11 +442,11 @@ export class AccidentRepository {
             },
           }
         );
-        console.log("🚀 ~ loginApi ~ response:", response.data);
+        console.log("🚀 ~ insertTabelKonversi2024 ~ response:", response.data);
         return response.data;
       } catch (error) {
-        // Handle errors
-        throw new Error("Failed to login");
+        console.error("Failed to insert 2024 data:", error);
+        throw new Error("Failed to insert 2024 data");
       }
     }
   
@@ -465,11 +465,11 @@ export class AccidentRepository {
             },
           }
         );
-        console.log("🚀 ~ loginApi ~ response:", response.data);
+        console.log("🚀 ~ Update 2024 data ~ response:", response.data);
         return response.data;
       } catch (error) {
         // Handle errors
-        throw new Error("Failed to login");
+        throw new Error("Failed to update 2024 data");
       }
     }
   
