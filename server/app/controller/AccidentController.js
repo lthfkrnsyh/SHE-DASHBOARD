@@ -668,7 +668,7 @@ class AccidentController {
     async (req, res) => {
       try {
         const tahun = req.params.tahun;
-        const apps = await GhgService.getGhgByTahun(tahun);
+        const apps = await AccidentService.getGhgByTahun(tahun);
         console.log(`upi log => ${JSON.stringify(apps)}`);
         if (apps.code == 200) {
           sendResponList(
@@ -688,7 +688,251 @@ class AccidentController {
       }
     },
   ];
-    
+  
+  //Tabel Konversi 2024
+  static deleteTabelKonversi2024 = [
+    tokenMidelWare,
+    async (req, res) => {
+      try {
+        const id = req.params.id;
+        // Attempt to delete the accident record from the database
+        const app = await AccidentService.deleteTabelKonversi2024(id);
+        if (app.code !== 200) {
+          return sendRespon(res, app.status, null, app.message, app.code);
+        }
+
+        // Send a successful response
+        sendRespon(
+          res,
+          app.status,
+          null,
+          "Tabel Konversi 2024 deleted successfully",
+          app.code
+        );
+      } catch (error) {
+        console.error("Error deleting Tabel Konversi 2024 record:", error);
+        sendRespon(res, 500, null, "Failed to delete Tabel Konversi 2024 record", 500);
+      }
+    },
+  ];
+  static getTabelKonversi2024All = [
+    tokenMidelWare,
+    async (req, res) => {
+      try {
+        const apps = await AccidentService.getTabelKonversi2024All(1, 10);
+        console.log(`upi log => ${JSON.stringify(apps)}`);
+        if (apps.code == 200) {
+          sendResponList(
+            res,
+            apps.status,
+            apps.data,
+            apps.message,
+            apps.meta,
+            apps.code
+          );
+        } else {
+          sendRespon(res, apps.status, {}, apps.message, apps.code);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        sendRespon(res, "ERROR", {}, "An error occurred", 500);
+      }
+    },
+  ];
+
+  static insertTabelKonversi2024 = [
+    tokenMidelWare,
+    async (req, res) => {
+      const { SumberEnergi, FaktorKonversiEmisiCO2, FaktorKonversiEmisiCH4, FaktorKonversiEmisiN2O, FaktorKonversiEnergiGJ } =
+        req.body;
+
+      const app = await AccidentService.insertTabelKonversi2024({
+        SumberEnergi: SumberEnergi,
+        FaktorKonversiEmisiCO2: FaktorKonversiEmisiCO2,
+        FaktorKonversiEmisiCH4: FaktorKonversiEmisiCH4,
+        FaktorKonversiEmisiN2O: FaktorKonversiEmisiN2O,
+        FaktorKonversiEnergiGJ: FaktorKonversiEnergiGJ,
+      });
+
+      console.log(`upi log => ${JSON.stringify(app)}`);
+      if (app.code == 201) {
+        sendRespon(res, app.status, null, app.message, app.code);
+      } else {
+        sendRespon(res, app.status, null, app.message, app.code);
+      }
+    },
+  ];
+  static updateTabelKonversi2024 = [
+    tokenMidelWare,
+    async (req, res) => {
+      const id = req.params.id;
+      const { SumberEnergi, FaktorKonversiEmisiCO2, FaktorKonversiEmisiCH4, FaktorKonversiEmisiN2O, FaktorKonversiEnergiGJ } =
+        req.body;
+
+      const app = await AccidentService.updateTabelKonversi2024(id, {
+        SumberEnergi: SumberEnergi,
+        FaktorKonversiEmisiCO2: FaktorKonversiEmisiCO2,
+        FaktorKonversiEmisiCH4: FaktorKonversiEmisiCH4,
+        FaktorKonversiEmisiN2O: FaktorKonversiEmisiN2O,
+        FaktorKonversiEnergiGJ: FaktorKonversiEnergiGJ,
+      });
+
+      console.log(`upi log => ${JSON.stringify(app)}`);
+      if (app.code == 201) {
+        sendRespon(res, app.status, null, app.message, app.code);
+      } else {
+        sendRespon(res, app.status, null, app.message, app.code);
+      }
+    },
+  ];
+  static getTabelKonversi2024ByTahun = [
+    tokenMidelWare,
+    async (req, res) => {
+      try {
+        const tahun = req.params.tahun;
+        const apps = await AccidentService.getTabelKonversi2024ByTahun(tahun);
+        console.log(`upi log => ${JSON.stringify(apps)}`);
+        if (apps.code == 200) {
+          sendResponList(
+            res,
+            apps.status,
+            apps.data,
+            apps.message,
+            apps.meta,
+            apps.code
+          );
+        } else {
+          sendRespon(res, apps.status, {}, apps.message, apps.code);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        sendRespon(res, "ERROR", {}, "An error occurred", 500);
+      }
+    },
+  ];
+
+  //Tabel Konversi 2019
+  static deleteTabelKonversi2019 = [
+    tokenMidelWare,
+    async (req, res) => {
+      try {
+        const id = req.params.id;
+        // Attempt to delete the accident record from the database
+        const app = await AccidentService.deleteTabelKonversi2019(id);
+        if (app.code !== 200) {
+          return sendRespon(res, app.status, null, app.message, app.code);
+        }
+
+        // Send a successful response
+        sendRespon(
+          res,
+          app.status,
+          null,
+          "Tabel Konversi 2019 deleted successfully",
+          app.code
+        );
+      } catch (error) {
+        console.error("Error deleting Tabel Konversi 2019 record:", error);
+        sendRespon(res, 500, null, "Failed to delete Tabel Konversi 2019 record", 500);
+      }
+    },
+  ];
+  static getTabelKonversi2019All = [
+    tokenMidelWare,
+    async (req, res) => {
+      try {
+        const apps = await AccidentService.getTabelKonversi2019All(1, 10);
+        console.log(`upi log => ${JSON.stringify(apps)}`);
+        if (apps.code == 200) {
+          sendResponList(
+            res,
+            apps.status,
+            apps.data,
+            apps.message,
+            apps.meta,
+            apps.code
+          );
+        } else {
+          sendRespon(res, apps.status, {}, apps.message, apps.code);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        sendRespon(res, "ERROR", {}, "An error occurred", 500);
+      }
+    },
+  ];
+
+  static insertTabelKonversi2019 = [
+    tokenMidelWare,
+    async (req, res) => {
+      const { SumberEnergi, FaktorKonversiEmisiCO2, FaktorKonversiEmisiCH4, FaktorKonversiEmisiN2O, FaktorKonversiEnergiGJ } =
+        req.body;
+
+      const app = await AccidentService.insertTabelKonversi2019({
+        SumberEnergi: SumberEnergi,
+        FaktorKonversiEmisiCO2: FaktorKonversiEmisiCO2,
+        FaktorKonversiEmisiCH4: FaktorKonversiEmisiCH4,
+        FaktorKonversiEmisiN2O: FaktorKonversiEmisiN2O,
+        FaktorKonversiEnergiGJ: FaktorKonversiEnergiGJ,
+      });
+
+      console.log(`upi log => ${JSON.stringify(app)}`);
+      if (app.code == 201) {
+        sendRespon(res, app.status, null, app.message, app.code);
+      } else {
+        sendRespon(res, app.status, null, app.message, app.code);
+      }
+    },
+  ];
+  static updateTabelKonversi2019 = [
+    tokenMidelWare,
+    async (req, res) => {
+      const id = req.params.id;
+      const { SumberEnergi, FaktorKonversiEmisiCO2, FaktorKonversiEmisiCH4, FaktorKonversiEmisiN2O, FaktorKonversiEnergiGJ } =
+        req.body;
+
+      const app = await AccidentService.updateTabelKonversi2019(id, {
+        SumberEnergi: SumberEnergi,
+        FaktorKonversiEmisiCO2: FaktorKonversiEmisiCO2,
+        FaktorKonversiEmisiCH4: FaktorKonversiEmisiCH4,
+        FaktorKonversiEmisiN2O: FaktorKonversiEmisiN2O,
+        FaktorKonversiEnergiGJ: FaktorKonversiEnergiGJ,
+      });
+
+      console.log(`upi log => ${JSON.stringify(app)}`);
+      if (app.code == 201) {
+        sendRespon(res, app.status, null, app.message, app.code);
+      } else {
+        sendRespon(res, app.status, null, app.message, app.code);
+      }
+    },
+  ];
+  static getTabelKonversi2019ByTahun = [
+    tokenMidelWare,
+    async (req, res) => {
+      try {
+        const tahun = req.params.tahun;
+        const apps = await AccidentService.getTabelKonversi2019ByTahun(tahun);
+        console.log(`upi log => ${JSON.stringify(apps)}`);
+        if (apps.code == 200) {
+          sendResponList(
+            res,
+            apps.status,
+            apps.data,
+            apps.message,
+            apps.meta,
+            apps.code
+          );
+        } else {
+          sendRespon(res, apps.status, {}, apps.message, apps.code);
+        }
+      } catch (error) {
+        console.error("Error:", error);
+        sendRespon(res, "ERROR", {}, "An error occurred", 500);
+      }
+    },
+  ];
+
   //ReportHistory
   static deleteReportHistory = [
     tokenMidelWare,

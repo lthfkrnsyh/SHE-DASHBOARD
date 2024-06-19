@@ -6,6 +6,7 @@ import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { User } from "../profile/page";
 import ModalAddGhg from "@/app/components/home/modal/ModalAddGhg";
 import ModalUpdateGhg from "@/app/components/home/modal/ModalUpdateGhg";
+import ModalConversion from "@/app/components/home/modal/ModalConversion";
 
 export interface GhgModel {
   id: number;
@@ -37,6 +38,7 @@ const HomePage = () => {
   const [endDate, setEndDate] = useState<string>('');
   const [entriesPerPage, setEntriesPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
+  const [isConversionModalOpen, setIsConversionModalOpen] = useState(false);
 
   const openModal = (data: GhgModel) => {
     setSelectedData(data);
@@ -49,9 +51,8 @@ const HomePage = () => {
   };
 
   const [user, setUser] = useState<User>();
-  const [ghgList, setGhgList] = useState<
-    GhgModel[]
-  >([]);
+  const [ghgList, setGhgList] = useState<GhgModel[]>([]);
+  
   useEffect(() => {
     // Mendapatkan data login dari local storage
     const isLoggedIn = localStorage.getItem("isLoggedIn");
@@ -155,6 +156,7 @@ const HomePage = () => {
             }}
           />
         )}
+        <ModalConversion isOpen={isConversionModalOpen} onClose={() => setIsConversionModalOpen(false)} />
       </div>
 
       <div className="mb-4">
@@ -184,6 +186,7 @@ const HomePage = () => {
             <option value={50}>50 entries per page</option>
             <option value={100}>100 entries per page</option>
           </select>
+          <button onClick={() => setIsConversionModalOpen(true)} className="bg-blue-500 text-white px-4 py-2 rounded-md ml-4">Conversion Table</button>
         </div>
       </div>
 
@@ -210,16 +213,16 @@ const HomePage = () => {
                 Natural Gas (MMBTU)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-              Solar / Diesel B35 (Liter)
+                Solar / Diesel B35 (Liter)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-              Bensin/Petrol 100% (Liter)
+                Bensin/Petrol 100% (Liter)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-              GRK (Ton CO₂)
+                GRK (Ton CO₂)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
-              Energy (GJ)
+                Energy (GJ)
               </th>
               <th scope="col" className="px-6 py-3 normal-case">
               Penggunaan REC (MWH)

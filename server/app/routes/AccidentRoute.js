@@ -68,6 +68,38 @@ routerAccident.delete(
   AccidentController.deleteGhg
 );
 
+//Tabel Konversi 2019
+routerAccident.get("/tabelkonversi2019", AccidentController.getTabelKonversi2019All);
+routerAccident.get(
+  "/tabelkonversi2019/:tahun",
+  AccidentController.getTabelKonversi2019ByTahun
+);
+routerAccident.post("/tabelkonversi2019", AccidentController.insertTabelKonversi2019);
+routerAccident.put(
+  "/tabelkonversi2019/:id",
+  AccidentController.updateTabelKonversi2019
+);
+routerAccident.delete(
+  "/ghg/:id",
+  AccidentController.deleteTabelKonversi2019
+);
+
+//Tabel Konversi 2024
+routerAccident.get("/tabelkonversi2024", AccidentController.getTabelKonversi2024All);
+routerAccident.get(
+  "/tabelkonversi2024/:tahun",
+  AccidentController.getTabelKonversi2024ByTahun
+);
+routerAccident.post("/tabelkonversi2024", AccidentController.insertTabelKonversi2024);
+routerAccident.put(
+  "/tabelkonversi2024/:id",
+  AccidentController.updateTabelKonversi2024
+);
+routerAccident.delete(
+  "/tabelkonversi2024/:id",
+  AccidentController.deleteTabelKonversi2024
+);
+
 //Report History
 
 routerAccident.get("/report_history", AccidentController.getReportHistoryAll);

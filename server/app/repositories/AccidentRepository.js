@@ -636,8 +636,303 @@ class AccidentRepository {
     }
   }
 
-  //Report History
+    //Tabel Konversi 2024
+    static async getTabelKonversi2024All() {
+      try {
+        const rows = await db("tabelkonversi2024")
+          .select()
+          .orderBy("id", "desc");
+        if (rows.length > 0) {
+          // Send the response outside of the map function
+          return {
+            code: 200,
+            message: "Tabel Konversi 2024 list Data!",
+            status: "SUCCESS",
+            data: rows,
+          };
+        } else {
+          // Send the response if rows are empty
+          return {
+            code: 404,
+            message: "Data apps Empty!",
+            status: "EMPTY",
+          };
+        }
+      } catch (err) {
+        // Send the error response here
+        return {
+          code: 400,
+          message: err.message || "Error fetching apps data",
+          status: "ERROR",
+        };
+      }
+    }
+  
+    static async insertTabelKonversi2024(data) {
+      const result = await db("tabelkonversi2024")
+        .insert(data)
+        .then(() => {
+          return {
+            code: 201,
+            message: "Insert success",
+            status: "SUCCES",
+          };
+        })
+        .catch((err) => {
+          const error = err.message.split("-");
+          return {
+            code: 400,
+            message: error[error.length - 1] || "Error fetching apps data",
+            status: "ERROR",
+          };
+        });
+      return result;
+    }
+  
+    static async updateTabelKonversi2024(id, data) {
+      const result = await db("tabelkonversi2024")
+        .update(data)
+        .where({ id: id })
+        .then(() => {
+          return {
+            code: 201,
+            message: "update success",
+            status: "SUCCES",
+          };
+        })
+        .catch((err) => {
+          const error = err.message.split("-");
+          return {
+            code: 400,
+            message: error[error.length - 1] || "Error fetching apps data",
+            status: "ERROR",
+          };
+        });
+      return result;
+    }
+  
+    static async deleteTabelKonversi2024(id) {
+      try {
+        const rowsAffected = await db("tabelkonversi2024")
+          .where("id", id)
+          .del();
+        if (rowsAffected === 0) {
+          // Jika tidak ada baris yang terpengaruh, mungkin level dengan UUID tersebut tidak ditemukan
+          return {
+            code: 404,
+            message: "Tabel Konversi 2024 not found",
+            status: "NOT_FOUND",
+          };
+        }
+  
+        return {
+          code: 202,
+          message: "Tabel Konversi 2024 successfully deleted!",
+          status: "SUCCESS",
+        };
+      } catch (error) {
+        console.error("Error deleting Tabel Konversi 2024:", error);
+        return {
+          code: 500,
+          message: "Internal server error",
+          status: "ERROR",
+        };
+      }
+    }
+  
+    static async getTabelKonversi2024ByTahun(tahun) {
+      try {
+        const labels = [
+          "01",
+          "02",
+          "03",
+          "04",
+          "05",
+          "06",
+          "07",
+          "08",
+          "09",
+          "10",
+          "11",
+          "12",
+        ];
+  
+        let data = [];
+  
+        for (const item of labels) {
+          const rows = await db("tabelkonversi2024")
+            .select()
+            .whereRaw("MONTH(date) = ? AND YEAR(date) = ?", [item, tahun]);
+  
+          data.push({ mount: item, year: tahun, data: rows }); // Menggunakan nilai default 0 jika count tidak ditemukan
+        }
+  
+        console.log("🚀 ~ TabelKonversi2024Repository ~ count:", data);
+        return {
+          code: 200,
+          message: "Data list",
+          status: "SUCCESS",
+          data: data,
+        };
+      } catch (error) {
+        console.error("Error:", error);
+        return {
+          code: 500,
+          message: "Internal server error",
+          status: "ERROR",
+        };
+      }
+    }
 
+        //Tabel Konversi 2019
+        static async getTabelKonversi2019All() {
+          try {
+            const rows = await db("tabelkonversi2019")
+              .select()
+              .orderBy("id", "desc");
+            if (rows.length > 0) {
+              // Send the response outside of the map function
+              return {
+                code: 200,
+                message: "Tabel Konversi 2019 list Data!",
+                status: "SUCCESS",
+                data: rows,
+              };
+            } else {
+              // Send the response if rows are empty
+              return {
+                code: 404,
+                message: "Data apps Empty!",
+                status: "EMPTY",
+              };
+            }
+          } catch (err) {
+            // Send the error response here
+            return {
+              code: 400,
+              message: err.message || "Error fetching apps data",
+              status: "ERROR",
+            };
+          }
+        }
+      
+        static async insertTabelKonversi2019(data) {
+          const result = await db("tabelkonversi2019")
+            .insert(data)
+            .then(() => {
+              return {
+                code: 201,
+                message: "Insert success",
+                status: "SUCCES",
+              };
+            })
+            .catch((err) => {
+              const error = err.message.split("-");
+              return {
+                code: 400,
+                message: error[error.length - 1] || "Error fetching apps data",
+                status: "ERROR",
+              };
+            });
+          return result;
+        }
+      
+        static async updateTabelKonversi2019(id, data) {
+          const result = await db("tabelkonversi2019")
+            .update(data)
+            .where({ id: id })
+            .then(() => {
+              return {
+                code: 201,
+                message: "update success",
+                status: "SUCCES",
+              };
+            })
+            .catch((err) => {
+              const error = err.message.split("-");
+              return {
+                code: 400,
+                message: error[error.length - 1] || "Error fetching apps data",
+                status: "ERROR",
+              };
+            });
+          return result;
+        }
+      
+        static async deleteTabelKonversi2019(id) {
+          try {
+            const rowsAffected = await db("tabelkonversi2019")
+              .where("id", id)
+              .del();
+            if (rowsAffected === 0) {
+              // Jika tidak ada baris yang terpengaruh, mungkin level dengan UUID tersebut tidak ditemukan
+              return {
+                code: 404,
+                message: "Tabel Konversi 2019 not found",
+                status: "NOT_FOUND",
+              };
+            }
+      
+            return {
+              code: 202,
+              message: "Tabel Konversi 2019 successfully deleted!",
+              status: "SUCCESS",
+            };
+          } catch (error) {
+            console.error("Error deleting Tabel Konversi 2019:", error);
+            return {
+              code: 500,
+              message: "Internal server error",
+              status: "ERROR",
+            };
+          }
+        }
+      
+        static async getTabelKonversi2019ByTahun(tahun) {
+          try {
+            const labels = [
+              "01",
+              "02",
+              "03",
+              "04",
+              "05",
+              "06",
+              "07",
+              "08",
+              "09",
+              "10",
+              "11",
+              "12",
+            ];
+      
+            let data = [];
+      
+            for (const item of labels) {
+              const rows = await db("tabelkonversi2019")
+                .select()
+                .whereRaw("MONTH(date) = ? AND YEAR(date) = ?", [item, tahun]);
+      
+              data.push({ mount: item, year: tahun, data: rows }); // Menggunakan nilai default 0 jika count tidak ditemukan
+            }
+      
+            console.log("🚀 ~ TabelKonversi2019Repository ~ count:", data);
+            return {
+              code: 200,
+              message: "Data list",
+              status: "SUCCESS",
+              data: data,
+            };
+          } catch (error) {
+            console.error("Error:", error);
+            return {
+              code: 500,
+              message: "Internal server error",
+              status: "ERROR",
+            };
+          }
+        }
+
+  //Report History
   static async getReportHistoryAll() {
     try {
       const rows = await db("report_history").select().orderBy("id", "desc");

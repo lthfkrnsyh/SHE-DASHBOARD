@@ -64,7 +64,6 @@ class AccidentService {
   }
 
   //GHG
-     // Solid Waste
      static async getGhgAll() {
       return await AccidentRepository.getGhgAll();
     }
@@ -79,6 +78,57 @@ class AccidentService {
     }
     static async getGhgByTahun(tahun) {
       return await AccidentRepository.getGhgByTahun(tahun);
+    }
+
+      //GHG
+     static async getGhgAll() {
+      return await AccidentRepository.getGhgAll();
+    }
+    static async insertGhg(data) {
+      return await AccidentRepository.insertGhg(data);
+    }
+    static async updateGhg(id, data) {
+      return await AccidentRepository.updateGhg(id, data);
+    }
+    static async deleteGhg(id) {
+      return await AccidentRepository.deleteGhg(id);
+    }
+    static async getGhgByTahun(tahun) {
+      return await AccidentRepository.getGhgByTahun(tahun);
+    }
+
+    //Tabel Konversi 2024
+    static async getTabelKonversi2024All() {
+      return await AccidentRepository.getTabelKonversi2024All();
+    }
+    static async insertTabelKonversi2024(data) {
+      return await AccidentRepository.insertTabelKonversi2024(data);
+    }
+    static async updateTabelKonversi2024(id, data) {
+      return await AccidentRepository.updateTabelKonversi2024(id, data);
+    }
+    static async deleteTabelKonversi2024(id) {
+      return await AccidentRepository.deleteTabelKonversi2024(id);
+    }
+    static async getTabelKonversi2024ByTahun(tahun) {
+      return await AccidentRepository.getTabelKonversi2024ByTahun(tahun);
+    }
+
+    //Tabel Konversi 2019
+    static async getTabelKonversi2019All() {
+      return await AccidentRepository.getTabelKonversi2019All();
+    }
+    static async insertTabelKonversi2019(data) {
+      return await AccidentRepository.insertTabelKonversi2019(data);
+    }
+    static async updateTabelKonversi2019(id, data) {
+      return await AccidentRepository.updateTabelKonversi2019(id, data);
+    }
+    static async deleteTabelKonversi2019(id) {
+      return await AccidentRepository.deleteTabelKonversi2019(id);
+    }
+    static async getTabelKonversi2019ByTahun(tahun) {
+      return await AccidentRepository.getTabelKonversi2019ByTahun(tahun);
     }
 
   // ReportHistory

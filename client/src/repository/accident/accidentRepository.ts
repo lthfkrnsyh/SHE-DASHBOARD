@@ -333,6 +333,7 @@ export class AccidentRepository {
     }
   }
 
+  //GHG
   async getListGhgAll(token: string): Promise<any> {
     try {
       const response = await axios.get(
@@ -397,6 +398,164 @@ export class AccidentRepository {
     try {
       const response = await axios.delete(
         "http://localhost:4000/accident/ghg/" + id,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("🚀 ~ loginApi ~ response:", response.data);
+      return response.data;
+    } catch (error) {
+      // Handle errors
+      throw new Error("Failed to login");
+    }
+  }
+
+    //Tabel Konversi 2024
+    async getListTabelKonversi2024All(token: string): Promise<any> {
+      try {
+        const response = await axios.get(
+          "http://localhost:4000/accident/tabelkonversi2024",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("🚀 ~ getListTabelKonversi2024All ~ response:", response.data);
+        return response.data;
+      } catch (error) {
+        // Handle errors
+        return [];
+      }
+    }
+  
+    async insertTabelKonversi2024(token: string, data: FormData): Promise<any> {
+      try {
+        const response = await axios.post(
+          "http://localhost:4000/accident/tabelkonversi2024",
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("🚀 ~ loginApi ~ response:", response.data);
+        return response.data;
+      } catch (error) {
+        // Handle errors
+        throw new Error("Failed to login");
+      }
+    }
+  
+    async updateTabelKonversi2024(
+      token: string,
+      id: string,
+      data: FormData
+    ): Promise<any> {
+      try {
+        const response = await axios.put(
+          "http://localhost:4000/accident/tabelkonversi2024/" + id,
+          data,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("🚀 ~ loginApi ~ response:", response.data);
+        return response.data;
+      } catch (error) {
+        // Handle errors
+        throw new Error("Failed to login");
+      }
+    }
+  
+    async deleteTabelKonversi2024(token: string, id: string): Promise<any> {
+      try {
+        const response = await axios.delete(
+          "http://localhost:4000/accident/tabelkonversi2024/" + id,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("🚀 ~ loginApi ~ response:", response.data);
+        return response.data;
+      } catch (error) {
+        // Handle errors
+        throw new Error("Failed to login");
+      }
+    }
+
+  //Tabel Konversi 2019
+  async getListTabelKonversi2019All(token: string): Promise<any> {
+    try {
+      const response = await axios.get(
+        "http://localhost:4000/accident/tabelkonversi2019",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("🚀 ~ getListTabelKonversi2019All ~ response:", response.data);
+      return response.data;
+    } catch (error) {
+      // Handle errors
+      return [];
+    }
+  }
+
+  async insertTabelKonversi2019(token: string, data: FormData): Promise<any> {
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/accident/tabelkonversi2019",
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("🚀 ~ loginApi ~ response:", response.data);
+      return response.data;
+    } catch (error) {
+      // Handle errors
+      throw new Error("Failed to login");
+    }
+  }
+
+  async updateTabelKonversi2019(
+    token: string,
+    id: string,
+    data: FormData
+  ): Promise<any> {
+    try {
+      const response = await axios.put(
+        "http://localhost:4000/accident/tabelkonversi2019/" + id,
+        data,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("🚀 ~ loginApi ~ response:", response.data);
+      return response.data;
+    } catch (error) {
+      // Handle errors
+      throw new Error("Failed to login");
+    }
+  }
+
+  async deleteTabelKonversi2019(token: string, id: string): Promise<any> {
+    try {
+      const response = await axios.delete(
+        "http://localhost:4000/accident/tabelkonversi2019/" + id,
         {
           headers: {
             Authorization: `Bearer ${token}`,
