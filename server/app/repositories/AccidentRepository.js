@@ -641,7 +641,7 @@ class AccidentRepository {
       try {
         const rows = await db("tabelkonversi2024")
           .select()
-          .orderBy("id", "desc");
+          .orderBy("id", "asc");
         if (rows.length > 0) {
           // Send the response outside of the map function
           return {
@@ -789,7 +789,7 @@ class AccidentRepository {
           try {
             const rows = await db("tabelkonversi2019")
               .select()
-              .orderBy("id", "desc");
+              .orderBy("id", "asc");
             if (rows.length > 0) {
               // Send the response outside of the map function
               return {

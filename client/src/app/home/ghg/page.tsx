@@ -27,6 +27,15 @@ export interface GhgModel {
   PersentaseRenewableEnergy: number | null;
 }
 
+export interface ConversionModel {
+  id: number;
+  SumberEnergi: string | null;
+  FaktorKonversiEmisiCO2: string | null;
+  FaktorKonversiEmisiCH4: string | null;
+  FaktorKonversiEmisiN2O: string | null;
+  FaktorKonversiEnergiGJ: string | null;
+}
+
 const HomePage = () => {
   const router = useRouter();
   const accidentRepos = new AccidentRepository();
@@ -38,7 +47,7 @@ const HomePage = () => {
   const [endDate, setEndDate] = useState<string>('');
   const [entriesPerPage, setEntriesPerPage] = useState<number>(10);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isConversionModalOpen, setIsConversionModalOpen] = useState(false);
+  const [isConversionModalOpen, setIsConversionModalOpen] = useState(false); // State untuk mengatur kapan modal harus terbuka
 
   const openModal = (data: GhgModel) => {
     setSelectedData(data);
@@ -48,6 +57,11 @@ const HomePage = () => {
   const closeModal = () => {
     setSelectedData(null);
     setIsOpen(false);
+  };
+
+  const openConversionModal = (data: ModalConversion) => {
+    setSelectedData(data);
+    setIsConversionModalOpen(true);
   };
 
   const [user, setUser] = useState<User>();
