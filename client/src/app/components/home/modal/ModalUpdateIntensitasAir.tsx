@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+"use client";
+import React, { FormEvent, useState, ChangeEvent } from "react";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { IntensitasAirModel } from "@/app/home/intensitas_air/page";
 
@@ -25,17 +26,19 @@ const ModalUpdateIntensitasAir: React.FC<UserModalProps> = ({
 
   const accidentRepos = new AccidentRepository();
 
-  const handleSubmitInsert = async (event) => {
+  const handleSubmitInsert = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await accidentRepos.updateIntensitasAir(token, data.id.toString(), {
-        product_finish_good: productFinishGood,
-        air_permukaan: airPermukaan,
-        air_tanah: airTanah,
-        air_pam: airPam,
-        date: date,
-      });
-      handleCallBack();
+        const formData = new FormData();
+      
+        formData.append("product_finish_good", productFinishGood.toString());
+        formData.append("air_permukaan", airPermukaan.toString());
+        formData.append("air_tanah", airTanah.toString());
+        formData.append("air_pam", airPam.toString());
+        formData.append("date", date.toString());
+
+        await accidentRepos.updateIntensitasAir(token, data.id.toString(), formData);
+        handleCallBack();
     } catch (error) {
       // Handle other errors (e.g., network issues)
       console.error("Error submitting report:", error);
@@ -45,14 +48,14 @@ const ModalUpdateIntensitasAir: React.FC<UserModalProps> = ({
   const handleCallBack = async () => {
     onSubmitCallback();
   };
-  const handleDateChange = (event) => {
+  const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDate(event.target.value);
   };
 
   return (
     <>
       {isOpen && (
-        <div className="modal" open={isOpen}>
+        <div className="modal">
           <div className="modal-box w-11/12 max-w-5xl rounded-lg">
             <h3 className="font-bold text-lg w-full">Add Report</h3>
             <form method="post" onSubmit={handleSubmitInsert}>

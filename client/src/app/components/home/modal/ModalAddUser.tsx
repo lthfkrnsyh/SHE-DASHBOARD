@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { RoleModel } from "@/app/home/users/page";
 
@@ -24,24 +24,23 @@ const ModalAddUser: React.FC<UserModalProps> = ({
 
   const accidentRepos = new AccidentRepository();
 
-  const handleUserChange = (event) => {
+  const handleUserChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
     setRole(parseInt(selectedValue)); // Convert string value to integer
   };
 
-  const handleSubmitInsert = async (event) => {
+  const handleSubmitInsert = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const formData = new FormData();
     try {
-      const response = await accidentRepos.insertUser(token, {
-        name: name,
-        email: email,
-        password: password,
-        phone_number: phone_number,
-        address: address,
-        role: role,
-      });
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("email", email);
+      formData.append("password", password);
+      formData.append("phone_number", phone_number);
+      formData.append("address", address);
+      formData.append("role", role.toString()); // Convert role to string
+
+      const response = await accidentRepos.insertUser(token, formData);
       handleCallBack();
     } catch (error) {
       // Handle other errors (e.g., network issues)
@@ -112,7 +111,7 @@ const ModalAddUser: React.FC<UserModalProps> = ({
                   Select User
                 </option>
                 {roleList.map((role) => (
-                  <option className="text-black py-2 px-4" value={role.id}>
+                  <option className="text-black py-2 px-4" value={role.id} key={role.id}>
                     {role.name.toUpperCase()}
                   </option>
                 ))}

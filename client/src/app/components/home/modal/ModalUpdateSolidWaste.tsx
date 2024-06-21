@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from "react";
+"use client";
+
+import React, { FormEvent, useState, ChangeEvent  } from "react";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { SolidWasteModel } from "@/app/home/solidwaste/page";
 
@@ -46,24 +48,25 @@ const ModalUpdateSolidWaste: React.FC<UserModalProps> = ({
 
   const accidentRepos = new AccidentRepository();
 
-  const handleSubmitInsert = async (event) => {
+  const handleSubmitInsert = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      await accidentRepos.updateIntensitasAir(token, data.id.toString(), {
-        limbah_plastik_non_b3_disposed: limbahPlastikNonB3Disposed,
-        limbah_domestik_non_plastik_non_b3_disposed: limbahDomestikNonPlastikNonB3Disposed,
-        limbah_industri_non_plastik_non_b3_disposed: limbahIndustriNonPlastikNonB3Disposed,
-        limbah_b3_disposed: limbahB3Disposed,
-        total_limbah_padat_disposed: totalLimbahPadatDisposed,
-        limbah_plastik_non_b3_diverted: limbahPlastikNonB3Diverted,
-        limbah_domestik_non_plastik_non_b3_diverted: limbahDomestikNonPlastikNonB3Diverted,
-        limbah_industri_non_plastik_non_b3_diverted: limbahIndustriNonPlastikNonB3Diverted,
-        limbah_b3_diverted: limbahB3Diverted,
-        total_limbah_padat_diverted: totalLimbahPadatDiverted,
-        total_limbah_padat: totalLimbahPadat,
-        percentage_diverted: percentageDiverted,
-        date: date,
-      });
+        const formData = new FormData();
+        formData.append("limbah_plastik_non_b3_disposed", limbahPlastikNonB3Disposed.toString());
+        formData.append("limbah_domestik_non_plastik_non_b3_disposed", limbahDomestikNonPlastikNonB3Disposed.toString());
+        formData.append("limbah_industri_non_plastik_non_b3_disposed", limbahIndustriNonPlastikNonB3Disposed.toString());
+        formData.append("limbah_b3_disposed", limbahB3Disposed.toString());
+        formData.append("total_limbah_padat_disposed", totalLimbahPadatDisposed.toString());
+        formData.append("limbah_plastik_non_b3_diverted", limbahPlastikNonB3Diverted.toString());
+        formData.append("limbah_domestik_non_plastik_non_b3_diverted", limbahDomestikNonPlastikNonB3Diverted.toString());
+        formData.append("limbah_industri_non_plastik_non_b3_diverted", limbahIndustriNonPlastikNonB3Diverted.toString());
+        formData.append("limbah_b3_diverted", limbahB3Diverted.toString());
+        formData.append("total_limbah_padat_diverted", totalLimbahPadatDiverted.toString());
+        formData.append("total_limbah_padat", totalLimbahPadat.toString());
+        formData.append("percentage_diverted", percentageDiverted.toString());
+        formData.append("date", date.toString());
+      
+        await accidentRepos.updateIntensitasAir(token, data.id.toString(), formData);
       handleCallBack();
     } catch (error) {
       // Handle other errors (e.g., network issues)
@@ -74,14 +77,14 @@ const ModalUpdateSolidWaste: React.FC<UserModalProps> = ({
   const handleCallBack = async () => {
     onSubmitCallback();
   };
-  const handleDateChange = (event) => {
+  const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDate(event.target.value);
   };
 
   return (
     <>
       {isOpen && (
-        <div className="modal" open={isOpen}>
+        <div className="modal">
           <div className="modal-box w-11/12 max-w-5xl rounded-lg">
             <h3 className="font-bold text-lg w-full">Add Report</h3>
             <form method="post" onSubmit={handleSubmitInsert}>

@@ -59,11 +59,6 @@ const HomePage = () => {
     setIsOpen(false);
   };
 
-  const openConversionModal = (data: ModalConversion) => {
-    setSelectedData(data);
-    setIsConversionModalOpen(true);
-  };
-
   const [user, setUser] = useState<User>();
   const [ghgList, setGhgList] = useState<GhgModel[]>([]);
   
@@ -130,7 +125,7 @@ const HomePage = () => {
     const start = new Date(startDate);
     const end = new Date(endDate);
     return ghgList.filter(item => {
-      const itemDate = new Date(item.date || '');
+      const itemDate = new Date(item.month || '');
       return itemDate >= start && itemDate <= end;
     });
   };
@@ -170,7 +165,6 @@ const HomePage = () => {
             }}
           />
         )}
-        <ModalConversion isOpen={isConversionModalOpen} onClose={() => setIsConversionModalOpen(false)} />
       </div>
 
       <div className="mb-4">

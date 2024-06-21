@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, ChangeEvent, FormEvent  } from "react";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { User } from "@/app/home/profile/page";
 
@@ -16,7 +16,7 @@ const ModalAddUser: React.FC<UserModalProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [userID, setUserID] = useState(userdata.id);
+  const [userID, setUserID] = useState<string>("");
   const [name, setName] = useState(userdata.name);
   const [email, setEmail] = useState(userdata.email);
   const [phone_number, setPhoneNumber] = useState(userdata.phone_number);
@@ -25,13 +25,14 @@ const ModalAddUser: React.FC<UserModalProps> = ({
 
   const accidentRepos = new AccidentRepository();
 
-  const handleUserChange = (event) => {
+  const handleUserChange = (event: ChangeEvent<HTMLInputElement>) => {
     const selectedValue = event.target.value;
-    setUserID(parseInt(selectedValue)); // Convert string value to integer
+    setUserID(selectedValue); // Convert string value to integer
   };
 
-  const handleSubmitInsert = async (event) => {
+  const handleSubmitInsert = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    try {
     const formData = new FormData();
     formData.append("name", name);
     formData.append("email", email);
@@ -39,8 +40,7 @@ const ModalAddUser: React.FC<UserModalProps> = ({
     formData.append("address", address);
     formData.append("role", role);
 
-    try {
-      // const response = await accidentRepos.sentReport(token, formData);
+    const response = await accidentRepos.updateUser(token, userID, formData);
       handleCallBack();
     } catch (error) {
       // Handle other errors (e.g., network issues)
@@ -53,13 +53,22 @@ const ModalAddUser: React.FC<UserModalProps> = ({
     setIsOpen(false);
   };
 
+  const getUserList = async () => {
+    try {
+      const response = await accidentRepos.getUserList(token);
+      setUserID(response.data);
+    } catch (error) {
+      console.error("Error fetching user list:", error);
+    }
+  };
+
   useEffect(() => {
     // Mengambil data dari localStorage saat komponen pertama kali dimuat
     console.log("token", token);
-    if (token != "") {
+    if (token) {
       getUserList();
     }
-  }, []);
+  }, [token]);
 
   return (
     <>

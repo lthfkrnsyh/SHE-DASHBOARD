@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { RoleModel } from "@/app/home/users/page";
 
@@ -30,24 +30,26 @@ const ModalAddReportHistory: React.FC<ReportHistoryProps> = ({
 
   const accidentRepos = new AccidentRepository();
 
-  const handleSubmitInsert = async (event) => {
+  const handleSubmitInsert = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await accidentRepos.insertReportHistory(token, {
-        frequncy_kecelakaan: frequncyKecelakaan,
-        mh_worked_hilang: mhWorkedHilang,
-        mh_worked_tersedia: mhWorkedTersedia,
-        hari_kerja_hilang: hariKerjaHilang,
-        hari_kerja_tersedia: hariKerjaTersedia,
-        jumlah_karyawan: jumlahKaryawan,
-        persen_mh_worked_hilang: persenMhWorkedHilang,
-        frequency_rate: frequencyRate,
-        severity_rate: severityRate,
-        cost_kecelakaa_kerja: costKecelakaaKerja,
-        kec_tampa_hari_hilang: kecTampaHariHilang,
-        kec_dg_hari_hilang: kecDgHariHilang,
-        data_input: dataInput,
-      });
+        const formData = new FormData();
+        
+        formData.append("frequncy_kecelakaan", frequncyKecelakaan);
+        formData.append("mh_worked_hilang", mhWorkedHilang);
+        formData.append("mh_worked_tersedia", mhWorkedTersedia);
+        formData.append("hari_kerja_hilang", hariKerjaHilang);
+        formData.append("hari_kerja_tersedia", hariKerjaTersedia);
+        formData.append("jumlah_karyawan", jumlahKaryawan);
+        formData.append("persen_mh_worked_hilang", persenMhWorkedHilang);
+        formData.append("frequency_rate", frequencyRate);
+        formData.append("severity_rate", severityRate);
+        formData.append("cost_kecelakaa_kerja", costKecelakaaKerja);
+        formData.append("kec_tampa_hari_hilang", kecTampaHariHilang);
+        formData.append("kec_dg_hari_hilang", kecDgHariHilang);
+        formData.append("data_input", dataInput);
+
+        const response = await accidentRepos.insertReportHistory(token, formData);
       handleCallBack();
     } catch (error) {
       // Handle other errors (e.g., network issues)
@@ -59,7 +61,7 @@ const ModalAddReportHistory: React.FC<ReportHistoryProps> = ({
     onSubmitCallback();
     setIsOpen(false);
   };
-  const handleDateChange = (event) => {
+  const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDateInput(event.target.value);
   };
 

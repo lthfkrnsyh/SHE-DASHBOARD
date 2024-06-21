@@ -1,12 +1,12 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { User } from "@/app/home/profile/page";
 import { AccidentReport } from "@/app/home/main/page";
 
 interface FileUploadProps {
   data: AccidentReport;
-  token: string; // Definisikan tipe token sebagai string
+  token: string;
   onSubmitCallback: () => void;
 }
 
@@ -17,7 +17,7 @@ const ModalAdd: React.FC<FileUploadProps> = ({
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
-  const [userID, setUserID] = useState(0);
+  const [userID, setUserID] = useState<string>("");
   const [date, setDate] = useState(data.date_accident || "");
   const [time, setTime] = useState(data.date_accident || "");
   const [location, setLocation] = useState(data.date_accident || "");
@@ -26,41 +26,48 @@ const ModalAdd: React.FC<FileUploadProps> = ({
   const [kronologi, setKronologi] = useState(data.date_accident || "");
   const [firstAid, setFirstAid] = useState(data.date_accident || "");
   const [eventCategory, setEventCategory] = useState(data.date_accident || "");
+  const [imageAccident, setImageAccident] = useState<File | null>(null);
+  const [imageFirstAid, setImageFirstAid] = useState<File | null>(null);
 
   const [user, setUser] = useState<User[]>([]);
 
   const accidentRepos = new AccidentRepository();
 
-  const handleUserChange = (event) => {
+  const handleUserChange = (event: ChangeEvent<HTMLSelectElement>) => {
     const selectedValue = event.target.value;
-    setUserID(parseInt(selectedValue)); // Convert string value to integer
+    setUserID(selectedValue);
   };
 
-  const handleDateChange = (event) => {
+  const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDate(event.target.value);
   };
 
-  const handleTimeChange = (event) => {
+  const handleTimeChange = (event: ChangeEvent<HTMLInputElement>) => {
     setTime(event.target.value);
   };
 
-  const handleSubmit = async (event, id) => {
+  const handleSubmit = async (id: string, event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const formData = new FormData();
-    formData.append("date_accident", date);
-    formData.append("time_accident", time);
-    formData.append("location", location);
-    formData.append("department", department);
-    formData.append("informasi", informasi);
-    formData.append("kronologi", kronologi);
-    formData.append("first_aid", firstAid);
-    formData.append("event_category", eventCategory);
-
     try {
-      const response = await accidentRepos.updateUser(token, id, {});
+      const formData = new FormData();
+      formData.append("date_accident", date);
+      formData.append("time_accident", time);
+      formData.append("location", location);
+      formData.append("department", department);
+      formData.append("informasi", informasi);
+      formData.append("kronologi", kronologi);
+      formData.append("first_aid", firstAid);
+      formData.append("event_category", eventCategory);
+      if (imageAccident) {
+        formData.append("image_accident", imageAccident);
+      }
+      if (imageFirstAid) {
+        formData.append("image_first_aid", imageFirstAid);
+      }
+
+      const response = await accidentRepos.updateUser(token, id, formData);
       handleCallBack();
     } catch (error) {
-      // Handle other errors (e.g., network issues)
       console.error("Error submitting report:", error);
     }
   };
@@ -80,12 +87,10 @@ const ModalAdd: React.FC<FileUploadProps> = ({
   };
 
   useEffect(() => {
-    // Mengambil data dari localStorage saat komponen pertama kali dimuat
-    console.log("token", token);
-    if (token != "") {
+    if (token) {
       getUserList();
     }
-  }, []);
+  }, [token]);
 
   return (
     <>
@@ -112,7 +117,7 @@ const ModalAdd: React.FC<FileUploadProps> = ({
       <dialog id="my_modal_4" className="modal" open={isOpen}>
         <div className="modal-box w-11/12 max-w-5xl rounded-lg">
           <h3 className="font-bold text-lg w-full ">Add Report</h3>
-          <form method="post" onSubmit={handleSubmit}>
+          <form method="post" onSubmit={(event) => handleSubmit(userID, event)}>
             <div className="m-2">
               <select
                 className="select select-bordered w-full rounded-lg mt-3"
@@ -127,7 +132,7 @@ const ModalAdd: React.FC<FileUploadProps> = ({
                   Select User
                 </option>
                 {user.map((user) => (
-                  <option className="text-black py-2 px-4" value={user.id}>
+                  <option className="text-black py-2 px-4" value={user.id} key={user.id}>
                     {user.name.toUpperCase()}
                   </option>
                 ))}
@@ -202,34 +207,33 @@ const ModalAdd: React.FC<FileUploadProps> = ({
                 required
               />
 
-              <label className="form-control w-full  mt-3">
+              <label className="form-control w-full mt-3">
                 <div className="label">
                   <span className="label-text">Image Accident</span>
                 </div>
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setImageAccident(e.target.files[0])}
+                  onChange={(e) => setImageAccident(e.target.files ? e.target.files[0] : null)}
                   className="file-input file-input-bordered w-full rounded-lg"
                   required
                 />
               </label>
 
-              <label className="form-control w-full  mt-3">
+              <label className="form-control w-full mt-3">
                 <div className="label">
                   <span className="label-text">Image First Aid</span>
                 </div>
                 <input
                   type="file"
                   accept="image/*"
-                  onChange={(e) => setImageFirstAid(e.target.files[0])}
+                  onChange={(e) => setImageFirstAid(e.target.files ? e.target.files[0] : null)}
                   className="file-input file-input-bordered w-full rounded-lg"
                   required
                 />
               </label>
             </div>
             <div className="modal-action">
-              {/* if there is a button, it will close the modal */}
               <button
                 type="button"
                 onClick={() => setIsOpen(false)}

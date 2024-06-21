@@ -191,14 +191,16 @@ class AuthController {
     async (req, res) => {
       let password = req.body.password;
       let email = req.body.email;
-
+  
+      console.log(`Login attempt: email=${email}, password=${password}`);
+  
       if (email.trim() === "" || password.trim() === "") {
         return res
           .status(400)
           .json({ error: "Email dan password harus diisi" });
       } else {
         const app = await AuthService.login(email, password);
-        console.log("🚀 ~ AuthController ~ app:Login", JSON.stringify(app));
+        console.log("Login response:", JSON.stringify(app));
         if (app.code == 200) {
           sendRespon(res, app.status, app.data, app.message, app.code);
         } else {
@@ -206,7 +208,7 @@ class AuthController {
         }
       }
     },
-  ];
+  ];  
 }
 
 module.exports = AuthController;

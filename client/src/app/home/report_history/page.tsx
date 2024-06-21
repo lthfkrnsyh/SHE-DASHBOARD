@@ -114,7 +114,7 @@ const HomePage = () => {
     if (!startDate || !endDate) return reportHistoryList;
     const start = new Date(startDate);
     const end = new Date(endDate);
-    return setReportHistoryList.filter(item => {
+    return reportHistoryList.filter(item => {
       const itemDate = new Date(item.data_input || '');
       return itemDate >= start && itemDate <= end;
     });
@@ -294,7 +294,7 @@ const HomePage = () => {
                   {item.kec_dg_hari_hilang || 0}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.data_input?.split(" ")[0] || "-"}
+                  {item.data_input ? new Date(item.data_input).toISOString().split('T')[0] : "-"}
                 </td>
                 <td className="px-6 py-4font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
                   <button

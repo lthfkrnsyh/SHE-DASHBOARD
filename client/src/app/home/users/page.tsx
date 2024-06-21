@@ -12,19 +12,6 @@ export interface RoleModel {
   date_update: string | null;
 }
 
-export interface User {
-  id: number;
-  name: string;
-  email: string;
-  password: string;
-  phone_number: string;
-  address: string;
-  role: RoleModel;
-  token: string;
-  date_create: string;
-  date_update: string | null;
-}
-
 export default function ListReportPage() {
   const [user, setUser] = useState<User | null>(null);
   const [userList, setUserList] = useState<User[]>([]);
@@ -64,7 +51,7 @@ export default function ListReportPage() {
     if (!searchQuery) return userList;
     return userList.filter(item => 
       item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.role.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.role.toLowerCase().includes(searchQuery.toLowerCase()) ||
       item.address.toLowerCase().includes(searchQuery.toLowerCase())
     );
   };
@@ -187,7 +174,7 @@ export default function ListReportPage() {
                   {item.phone_number}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                  {item.role.name}
+                  {item.role}
                 </td>
                 <td className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center">
                   <button className="btn btn-circle btn-success" type="button">

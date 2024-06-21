@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
+import { User } from "../profile/page";
 import ModalAddSolidWaste from "@/app/components/home/modal/ModalAddSolidWaste";
 import ModalUpdateSolidWaste from "@/app/components/home/modal/ModalUpdateSolidWaste";
 

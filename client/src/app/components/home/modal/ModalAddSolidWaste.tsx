@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { RoleModel } from "@/app/home/users/page";
 
@@ -29,25 +29,26 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
   const [date, setDate] = useState("");
 
   const accidentRepos = new AccidentRepository();
-
-  const handleSubmitInsert = async (event) => {
+  const handleSubmitInsert = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await accidentRepos.insertIntensitasAir(token, {
-        limbah_plastik_non_b3_disposed: limbahPlastikNonB3Disposed,
-        limbah_domestik_non_plastik_non_b3_disposed: limbahDomestikNonPlastikNonB3Disposed,
-        limbah_industri_non_plastik_non_b3_disposed: limbahIndustriNonPlastikNonB3Disposed,
-        limbah_b3_disposed: limbahB3Disposed,
-        total_limbah_padat_disposed: totalLimbahPadatDisposed,
-        limbah_plastik_non_b3_diverted: limbahPlastikNonB3Diverted,
-        limbah_domestik_non_plastik_non_b3_diverted: limbahDomestikNonPlastikNonB3Diverted,
-        limbah_industri_non_plastik_non_b3_diverted: limbahIndustriNonPlastikNonB3Diverted,
-        limbah_b3_diverted: limbahB3Diverted,
-        total_limbah_padat_diverted: totalLimbahPadatDiverted,
-        total_limbah_padat: totalLimbahPadat,
-        percentage_diverted: percentageDiverted,
-        date: date,
-      });
+      const formData = new FormData();
+      
+        formData.append("limbah_plastik_non_b3_disposed", limbahPlastikNonB3Disposed);
+        formData.append("limbah_domestik_non_plastik_non_b3_disposed", limbahDomestikNonPlastikNonB3Disposed);
+        formData.append("limbah_industri_non_plastik_non_b3_disposed", limbahIndustriNonPlastikNonB3Disposed);
+        formData.append("limbah_b3_disposed", limbahB3Disposed);
+        formData.append("total_limbah_padat_disposed", totalLimbahPadatDisposed);
+        formData.append("limbah_plastik_non_b3_diverted", limbahPlastikNonB3Diverted);
+        formData.append("limbah_domestik_non_plastik_non_b3_diverted", limbahDomestikNonPlastikNonB3Diverted);
+        formData.append("limbah_industri_non_plastik_non_b3_diverted", limbahIndustriNonPlastikNonB3Diverted);
+        formData.append("limbah_b3_diverted", limbahB3Diverted);
+        formData.append("total_limbah_padat_diverted", totalLimbahPadatDiverted);
+        formData.append("total_limbah_padat", totalLimbahPadat);
+        formData.append("percentage_diverted", percentageDiverted);
+        formData.append("date", date);
+
+        const response = await accidentRepos.insertSolidWaste(token, formData);
       handleCallBack();
     } catch (error) {
       // Handle other errors (e.g., network issues)
@@ -59,7 +60,7 @@ const ModalAddSolidWaste: React.FC<UserModalProps> = ({
     onSubmitCallback();
     setIsOpen(false);
   };
-  const handleDateChange = (event) => {
+  const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDate(event.target.value);
   };
 

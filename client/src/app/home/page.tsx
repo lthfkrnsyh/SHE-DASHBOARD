@@ -1,4 +1,3 @@
-// app/layout.tsx
 "use client";
 import React, { useEffect, useState } from "react";
 import DoughnutChart, { DoughnutChartData } from "../components/home/chart/DoughnutChart";
@@ -196,7 +195,7 @@ const HomePage = () => {
     intensitasAir: true,
   });
 
-  const handleCheckboxChange = (chart: string) => {
+  const handleCheckboxChange = (chart: keyof typeof selectedCharts) => {
     setSelectedCharts((prev) => ({
       ...prev,
       [chart]: !prev[chart],
@@ -386,7 +385,7 @@ const HomePage = () => {
         });
       }
 
-      if (responseIntensitasAir.status === "SUCCESS") {
+      if (responseIntensitasAir.status === "SUCCESS" && responseIntensitasAir.data) {
         setIntensitasAir({
           labels: [
             "Januari",

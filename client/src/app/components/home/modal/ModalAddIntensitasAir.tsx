@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, FormEvent, ChangeEvent } from "react";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
 import { RoleModel } from "@/app/home/users/page";
 
@@ -22,17 +22,19 @@ const ModalAddIntensitasAir: React.FC<UserModalProps> = ({
 
   const accidentRepos = new AccidentRepository();
 
-  const handleSubmitInsert = async (event) => {
+  const handleSubmitInsert = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await accidentRepos.insertIntensitasAir(token, {
-        product_finish_good: productFinishGood,
-        air_permukaan: airPermukaan,
-        air_tanah: airTanah,
-        air_pam: airPam,
-        date: date,
-      });
-      handleCallBack();
+      const formData = new FormData();
+      
+        formData.append("product_finish_good", productFinishGood);
+        formData.append("air_permukaan", airPermukaan);
+        formData.append("air_tanah", airTanah);
+        formData.append("air_pam", airPam);
+        formData.append("date", date);
+
+        const response = await accidentRepos.insertIntensitasAir(token, formData);
+        handleCallBack();
     } catch (error) {
       // Handle other errors (e.g., network issues)
       console.error("Error submitting report:", error);
@@ -43,7 +45,8 @@ const ModalAddIntensitasAir: React.FC<UserModalProps> = ({
     onSubmitCallback();
     setIsOpen(false);
   };
-  const handleDateChange = (event) => {
+
+  const handleDateChange = (event: ChangeEvent<HTMLInputElement>) => {
     setDate(event.target.value);
   };
 

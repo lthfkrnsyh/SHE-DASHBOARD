@@ -360,6 +360,7 @@ export class AccidentRepository {
         {
           headers: {
             Authorization: `Bearer ${token}`,
+            "Content-Type": "multipart/form-data", // Ensure this header is set for FormData
           },
         }
       );
@@ -367,9 +368,10 @@ export class AccidentRepository {
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to insert GHG data");
     }
   }
+  
 
   async updateGhg(
     token: string,

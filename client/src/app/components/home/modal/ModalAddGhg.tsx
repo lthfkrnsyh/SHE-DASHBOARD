@@ -36,28 +36,30 @@ const ModalAddGhg: React.FC<UserModalProps> = ({
   const handleSubmitInsert = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await accidentRepos.insertGhg(token, {
-        year: year,
-        month: month,
-        Listrik: parseFloat(Listrik),
-        SolarDieselB30: parseFloat(SolarDieselB30),
-        NaturalGas: parseFloat(NaturalGas),
-        SolarDieselB35: parseFloat(SolarDieselB35),
-        BensinPetrol: parseFloat(BensinPetrol),
-        GRK: parseFloat(GRK),
-        EnergyGJ: parseFloat(EnergyGJ),
-        PenggunaanREC: parseFloat(PenggunaanREC),
-        TotalAkhirGRK: parseFloat(TotalAkhirGRK),
-        PersentaseReduceGRK: parseFloat(PersentaseReduceGRK),
-        TotalAkhirEnergyGJ: parseFloat(TotalAkhirEnergyGJ),
-        TotalRenewableEnergyGJ: parseFloat(TotalRenewableEnergyGJ),
-        PersentaseRenewableEnergy: parseFloat(PersentaseRenewableEnergy),
-      });
+      const formData = new FormData();
+      formData.append("year", year);
+      formData.append("month", month);
+      formData.append("Listrik", Listrik);
+      formData.append("SolarDieselB30", SolarDieselB30);
+      formData.append("NaturalGas", NaturalGas);
+      formData.append("SolarDieselB35", SolarDieselB35);
+      formData.append("BensinPetrol", BensinPetrol);
+      formData.append("GRK", GRK);
+      formData.append("EnergyGJ", EnergyGJ);
+      formData.append("PenggunaanREC", PenggunaanREC);
+      formData.append("TotalAkhirGRK", TotalAkhirGRK);
+      formData.append("PersentaseReduceGRK", PersentaseReduceGRK);
+      formData.append("TotalAkhirEnergyGJ", TotalAkhirEnergyGJ);
+      formData.append("TotalRenewableEnergyGJ", TotalRenewableEnergyGJ);
+      formData.append("PersentaseRenewableEnergy", PersentaseRenewableEnergy);
+  
+      const response = await accidentRepos.insertGhg(token, formData);
       handleCallBack();
     } catch (error) {
       console.error("Error submitting report:", error);
     }
   };
+  
 
   const handleCallBack = async () => {
     onSubmitCallback();
