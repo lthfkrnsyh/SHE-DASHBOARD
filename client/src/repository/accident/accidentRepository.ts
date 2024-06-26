@@ -7,7 +7,7 @@ export class AccidentRepository {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getListAllAccidentApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -25,7 +25,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getChartReportApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -43,7 +43,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getChartJamKerjaHilangApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -62,11 +62,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ sentReportApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to sent report");
     }
   }
 
@@ -77,11 +77,11 @@ export class AccidentRepository {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ insertApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to insert");
     }
   }
 
@@ -96,11 +96,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ updateUser ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to update");
     }
   }
 
@@ -111,7 +111,7 @@ export class AccidentRepository {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getUserListApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -129,11 +129,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ deleteApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to delete");
     }
   }
 
@@ -152,11 +152,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ approvedReportApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to Approved Report");
     }
   }
 
@@ -167,7 +167,7 @@ export class AccidentRepository {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getRolesApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -186,7 +186,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getListApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -205,11 +205,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ insertApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to insert");
     }
   }
 
@@ -228,11 +228,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ updateApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to update");
     }
   }
 
@@ -246,11 +246,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ deleteApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to delete");
     }
   }
 
@@ -265,7 +265,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getListApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -284,11 +284,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ insertApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to insert");
     }
   }
 
@@ -307,11 +307,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ updateApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to update");
     }
   }
 
@@ -325,11 +325,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ deleteApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to delete");
     }
   }
 
@@ -344,7 +344,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getListApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -364,7 +364,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ insertApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -388,11 +388,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ updateApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to update");
     }
   }
 
@@ -406,11 +406,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ deleteApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to delete");
     }
   }
 
@@ -485,11 +485,11 @@ export class AccidentRepository {
             },
           }
         );
-        console.log("🚀 ~ loginApi ~ response:", response.data);
+        console.log("🚀 ~ deleteApi ~ response:", response.data);
         return response.data;
       } catch (error) {
         // Handle errors
-        throw new Error("Failed to login");
+        throw new Error("Failed to delete");
       }
     }
 
@@ -523,11 +523,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ insertApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to insert");
     }
   }
 
@@ -546,11 +546,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ updateApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to update");
     }
   }
 
@@ -564,11 +564,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ deleteApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to delete");
     }
   }
 
@@ -583,7 +583,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getListApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -602,11 +602,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ insertApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to insert");
     }
   }
 
@@ -620,11 +620,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ deleteApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to delete");
     }
   }
 
@@ -643,11 +643,11 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ updateApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
-      throw new Error("Failed to login");
+      throw new Error("Failed to update");
     }
   }
 
@@ -661,7 +661,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getChartFrequencyRateApi ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -679,7 +679,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getChartSeverityRate ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors
@@ -697,7 +697,7 @@ export class AccidentRepository {
           },
         }
       );
-      console.log("🚀 ~ loginApi ~ response:", response.data);
+      console.log("🚀 ~ getChartIntensitasAirRate ~ response:", response.data);
       return response.data;
     } catch (error) {
       // Handle errors

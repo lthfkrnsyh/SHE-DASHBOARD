@@ -33,14 +33,14 @@ class AccidentService {
   static async getIntensitasAirAll() {
     return await AccidentRepository.getIntensitasAirAll();
   }
-  static async insertItensitasAir(data) {
-    return await AccidentRepository.insertItensitasAir(data);
+  static async insertIntensitasAir(data) {
+    return await AccidentRepository.insertIntensitasAir(data);
   }
-  static async updateItensitasAir(id, data) {
-    return await AccidentRepository.updateItensitasAir(id, data);
+  static async updateIntensitasAir(id, data) {
+    return await AccidentRepository.updateIntensitasAir(id, data);
   }
-  static async deleteItensitasAir(id) {
-    return await AccidentRepository.deleteItensitasAir(id);
+  static async deleteIntensitasAir(id) {
+    return await AccidentRepository.deleteIntensitasAir(id);
   }
   static async getIntensitasAirByTahun(tahun) {
     return await AccidentRepository.getIntensitasAirByTahun(tahun);
@@ -153,13 +153,13 @@ class AccidentService {
   }
 
   //new
-  static async getChartReportHistoryFreguensiKecelakaanByTahun(tahun) {
-    return await AccidentRepository.getChartReportHistoryFreguensiKecelakaanByTahun(
+  static async getChartReportHistoryFrekuensiKecelakaanByTahun(tahun) {
+    return await AccidentRepository.getChartReportHistoryFrekuensiKecelakaanByTahun(
       tahun
     );
   }
-  static async getChartReportHistoryFreguensiRateByTahun(tahun) {
-    return await AccidentRepository.getChartReportHistoryFreguensiRateByTahun(
+  static async getChartReportHistoryFrekuensiRateByTahun(tahun) {
+    return await AccidentRepository.getChartReportHistoryFrekuensiRateByTahun(
       tahun
     );
   }

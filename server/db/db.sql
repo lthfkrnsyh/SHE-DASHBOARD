@@ -211,10 +211,10 @@ INSERT INTO `report_history` (`id`, `frequncy_kecelakaan`, `mh_worked_hilang`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `report_intensitas_air`
+-- Table structure for table `intensitas_air`
 --
 
-CREATE TABLE `report_intensitas_air` (
+CREATE TABLE `intensitas_air` (
   `id` bigint NOT NULL,
   `product_finish_good` double DEFAULT NULL,
   `air_permukaan` double DEFAULT NULL,
@@ -226,10 +226,10 @@ CREATE TABLE `report_intensitas_air` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data for table `report_intensitas_air`
+-- Dumping data for table `intensitas_air`
 --
 
-INSERT INTO `report_intensitas_air` (`id`, `product_finish_good`, `air_permukaan`, `air_tanah`, `air_pam`, `date`, `date_create`, `date_update`) VALUES
+INSERT INTO `intensitas_air` (`id`, `product_finish_good`, `air_permukaan`, `air_tanah`, `air_pam`, `date`, `date_create`, `date_update`) VALUES
 (1, 975.28, 0, 0, 4089, '2019-01-13', NULL, NULL),
 (2, 913.46, 0, 0, 5686, '2019-02-13', NULL, NULL),
 (3, 956.57, 0, 0, 6852, '2019-03-13', NULL, NULL),
@@ -490,9 +490,9 @@ ALTER TABLE `report_history`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `report_intensitas_air`
+-- Indexes for table `intensitas_air`
 --
-ALTER TABLE `report_intensitas_air`
+ALTER TABLE `intensitas_air`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -566,9 +566,9 @@ ALTER TABLE `report_history`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
 
 --
--- AUTO_INCREMENT for table `report_intensitas_air`
+-- AUTO_INCREMENT for table `intensitas_air`
 --
-ALTER TABLE `report_intensitas_air`
+ALTER TABLE `intensitas_air`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --

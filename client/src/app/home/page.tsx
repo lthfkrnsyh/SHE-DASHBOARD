@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import DoughnutChart, { DoughnutChartData } from "../components/home/chart/DoughnutChart";
 import BarChart, { BarChartData } from "../components/home/chart/BarChart";
 import { useRouter } from "next/navigation";
 import { AccidentRepository } from "@/repository/accident/accidentRepository";
@@ -36,7 +35,7 @@ const HomePage = () => {
     ],
   });
 
-  const [chartData, setChartData] = useState<DoughnutChartData>({
+  const [chartData, setChartData] = useState<BarChartData>({
     labels: [
       "Januari",
       "Februari",
@@ -73,7 +72,7 @@ const HomePage = () => {
     ],
   });
 
-  const [chartFrequncyRate, setChartFrequncyRate] = useState<DoughnutChartData>({
+  const [chartData3, setChartData3] = useState<BarChartData>({
     labels: [
       "Januari",
       "Februari",
@@ -110,7 +109,7 @@ const HomePage = () => {
     ],
   });
 
-  const [intensitasAir, setIntensitasAir] = useState<DoughnutChartData>({
+  const [chartData4, setChartData4] = useState<BarChartData>({
     labels: [
       "Januari",
       "Februari",
@@ -147,7 +146,7 @@ const HomePage = () => {
     ],
   });
 
-  const [chartSeverityRate, setChartSeverityRate] = useState<DoughnutChartData>({
+  const [chartData5, setChartData5] = useState<BarChartData>({
     labels: [
       "Januari",
       "Februari",
@@ -308,7 +307,7 @@ const HomePage = () => {
       }
 
       if (responseFrequncyRate.status === "SUCCESS") {
-        setChartFrequncyRate({
+        setChartData3({
           labels: [
             "Januari",
             "Februari",
@@ -347,7 +346,7 @@ const HomePage = () => {
       }
 
       if (responseSeverityRate.status === "SUCCESS") {
-        setChartSeverityRate({
+        setChartData4({
           labels: [
             "Januari",
             "Februari",
@@ -386,7 +385,7 @@ const HomePage = () => {
       }
 
       if (responseIntensitasAir.status === "SUCCESS" && responseIntensitasAir.data) {
-        setIntensitasAir({
+        setChartData5({
           labels: [
             "Januari",
             "Februari",
@@ -512,7 +511,7 @@ const HomePage = () => {
           <div className="card bg-white p-3">
             <div>
               <h1 className="text-gray-700 font-bold text-2xl">Jam Kerja Hilang</h1>
-              <DoughnutChart data={chartData} />
+              <BarChart data={chartData} />
             </div>
           </div>
         )}
@@ -521,7 +520,7 @@ const HomePage = () => {
           <div className="card bg-white p-3">
             <div>
               <h1 className="text-gray-700 font-bold text-2xl">Frequency Rate</h1>
-              <DoughnutChart data={chartFrequncyRate} />
+              <BarChart data={chartData3} />
             </div>
           </div>
         )}
@@ -530,7 +529,7 @@ const HomePage = () => {
           <div className="card bg-white p-3">
             <div>
               <h1 className="text-gray-700 font-bold text-2xl">Severity Rate</h1>
-              <DoughnutChart data={chartSeverityRate} />
+              <BarChart data={chartData4} />
             </div>
           </div>
         )}
@@ -539,7 +538,7 @@ const HomePage = () => {
           <div className="card bg-white p-3">
             <div>
               <h1 className="text-gray-700 font-bold text-2xl">Intensitas Air</h1>
-              <DoughnutChart data={intensitasAir} />
+              <BarChart data={chartData5} />
             </div>
           </div>
         )}

@@ -195,7 +195,7 @@ class AccidentRepository {
 
   static async getIntensitasAirAll() {
     try {
-      const rows = await db("report_intensitas_air")
+      const rows = await db("intensitas_air")
         .select()
         .orderBy("id", "desc");
       if (rows.length > 0) {
@@ -224,8 +224,8 @@ class AccidentRepository {
     }
   }
 
-  static async insertItensitasAir(data) {
-    const result = await db("report_intensitas_air")
+  static async insertIntensitasAir(data) {
+    const result = await db("intensitas_air")
       .insert(data)
       .then(() => {
         return {
@@ -245,8 +245,8 @@ class AccidentRepository {
     return result;
   }
 
-  static async updateItensitasAir(id, data) {
-    const result = await db("report_intensitas_air")
+  static async updateIntensitasAir(id, data) {
+    const result = await db("intensitas_air")
       .update(data)
       .where({ id: id })
       .then(() => {
@@ -267,9 +267,9 @@ class AccidentRepository {
     return result;
   }
 
-  static async deleteItensitasAir(id) {
+  static async deleteIntensitasAir(id) {
     try {
-      const rowsAffected = await db("report_intensitas_air")
+      const rowsAffected = await db("intensitas_air")
         .where("id", id)
         .del();
       if (rowsAffected === 0) {
@@ -283,11 +283,11 @@ class AccidentRepository {
 
       return {
         code: 202,
-        message: "Level successfully deleted!",
+        message: "Data successfully deleted!",
         status: "SUCCESS",
       };
     } catch (error) {
-      console.error("Error deleting level:", error);
+      console.error("Error deleting data:", error);
       return {
         code: 500,
         message: "Internal server error",
@@ -316,7 +316,7 @@ class AccidentRepository {
       let data = [];
 
       for (const item of labels) {
-        const rows = await db("report_intensitas_air")
+        const rows = await db("intensitas_air")
           .select()
           .whereRaw("MONTH(date) = ? AND YEAR(date) = ?", [item, tahun]);
 
@@ -1019,11 +1019,11 @@ class AccidentRepository {
 
       return {
         code: 202,
-        message: "Level successfully deleted!",
+        message: "Data successfully deleted!",
         status: "SUCCESS",
       };
     } catch (error) {
-      console.error("Error deleting level:", error);
+      console.error("Error deleting data:", error);
       return {
         code: 500,
         message: "Internal server error",
@@ -1165,7 +1165,7 @@ class AccidentRepository {
     }
   }
 
-  static async getChartReportHistoryFreguensiKecelakaanByTahun(tahun) {
+  static async getChartReportHistoryFrekuensiKecelakaanByTahun(tahun) {
     try {
       const labels = [
         "01",
@@ -1219,7 +1219,7 @@ class AccidentRepository {
     }
   }
 
-  static async getChartReportHistoryFreguensiRateByTahun(tahun) {
+  static async getChartReportHistoryFrekuensiRateByTahun(tahun) {
     try {
       const labels = [
         "01",
@@ -1349,7 +1349,7 @@ class AccidentRepository {
       let data_air_pam = [];
 
       for (const item of labels) {
-        const count = await db("report_intensitas_air")
+        const count = await db("intensitas_air")
           .whereRaw("MONTH(date) = ? AND YEAR(date) = ?", [item, tahun])
           .select();
         if (count.length > 0) {

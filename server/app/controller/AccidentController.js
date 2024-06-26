@@ -285,7 +285,7 @@ class AccidentController {
       try {
         const id = req.params.id;
         // Attempt to delete the accident record from the database
-        const app = await AccidentService.deleteItensitasAir(id);
+        const app = await AccidentService.deleteIntensitasAir(id);
         if (app.code !== 200) {
           return sendRespon(res, app.status, null, app.message, app.code);
         }
@@ -329,13 +329,13 @@ class AccidentController {
     },
   ];
 
-  static insertItensitasAir = [
+  static insertIntensitasAir = [
     tokenMidelWare,
     async (req, res) => {
       const { product_finish_good, air_permukaan, air_tanah, air_pam, date } =
         req.body;
 
-      const app = await AccidentService.insertItensitasAir({
+      const app = await AccidentService.insertIntensitasAir({
         product_finish_good: product_finish_good,
         air_permukaan: air_permukaan,
         air_tanah: air_tanah,
@@ -351,14 +351,14 @@ class AccidentController {
       }
     },
   ];
-  static updateItensitasAir = [
+  static updateIntensitasAir = [
     tokenMidelWare,
     async (req, res) => {
       const id = req.params.id;
       const { product_finish_good, air_permukaan, air_tanah, air_pam, date } =
         req.body;
 
-      const app = await AccidentService.updateItensitasAir(id, {
+      const app = await AccidentService.updateIntensitasAir(id, {
         product_finish_good: product_finish_good,
         air_permukaan: air_permukaan,
         air_tanah: air_tanah,
@@ -1122,13 +1122,13 @@ class AccidentController {
   ];
 
   //new
-  static getChartReportHistoryFreguensiKecelakaanByTahun = [
+  static getChartReportHistoryFrekuensiKecelakaanByTahun = [
     tokenMidelWare,
     async (req, res) => {
       try {
         const tahun = req.params.tahun;
         const apps =
-          await AccidentService.getChartReportHistoryFreguensiKecelakaanByTahun(
+          await AccidentService.getChartReportHistoryFrekuensiKecelakaanByTahun(
             tahun
           );
         console.log(`upi log => ${JSON.stringify(apps)}`);
@@ -1150,13 +1150,13 @@ class AccidentController {
       }
     },
   ];
-  static getChartReportHistoryFreguensiRateByTahun = [
+  static getChartReportHistoryFrekuensiRateByTahun = [
     tokenMidelWare,
     async (req, res) => {
       try {
         const tahun = req.params.tahun;
         const apps =
-          await AccidentService.getChartReportHistoryFreguensiRateByTahun(
+          await AccidentService.getChartReportHistoryFrekuensiRateByTahun(
             tahun
           );
         console.log(`upi log => ${JSON.stringify(apps)}`);

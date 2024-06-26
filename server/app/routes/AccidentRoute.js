@@ -25,10 +25,10 @@ routerAccident.get(
   "/intensitas_air/:tahun",
   AccidentController.getIntensitasAirByTahun
 );
-routerAccident.post("/intensitas_air", AccidentController.insertItensitasAir);
+routerAccident.post("/intensitas_air", AccidentController.insertIntensitasAir);
 routerAccident.put(
   "/intensitas_air/:id",
-  AccidentController.updateItensitasAir
+  AccidentController.updateIntensitasAir
 );
 routerAccident.delete(
   "/intensitas_air/:id",
@@ -124,12 +124,12 @@ routerAccident.get(
 //new
 routerAccident.get(
   "/chart_rate_kecelakaan/:tahun",
-  AccidentController.getChartReportHistoryFreguensiKecelakaanByTahun
+  AccidentController.getChartReportHistoryFrekuensiKecelakaanByTahun
 );
 
 routerAccident.get(
   "/chart_frequency_rate/:tahun",
-  AccidentController.getChartReportHistoryFreguensiRateByTahun
+  AccidentController.getChartReportHistoryFrekuensiRateByTahun
 );
 
 routerAccident.get(
